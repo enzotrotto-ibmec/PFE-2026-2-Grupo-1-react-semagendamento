@@ -1,5 +1,5 @@
 // Faixa de números que contam de 0 até o valor quando entram na tela (GSAP, em utils/animacoes.js).
-// Usa só números reais do próprio site (quantidade de modalidades, dias e horários da agenda),
+// Usa só números reais do próprio site (quantidade de modalidades, dias e horários de funcionamento),
 // nada inventado. Props: itens = [{ valor, rotulo }]
 export default function FaixaNumeros({ itens }) {
   return (

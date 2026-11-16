@@ -92,11 +92,6 @@ body {
   height: 1.4em;
   width: auto;
 }
-/* mesmo alinhamento do cabeçalho: OTO maior e 8,7% mais baixa (o arquivo inclui a palavra "STUDIO") */
-.footer-logo img:last-of-type {
-  height: 1.8em;
-  transform: translateY(8.7%);
-}
 
 .footer-amp {
   font-family: var(--font-display);
@@ -199,9 +194,3 @@ body {
 /* Ícone do Instagram acompanha o tamanho do cartão */
 .social-icon svg { width: 55%; height: 55%; }
 
-
-/* Instagram com o degradê oficial sobre disco branco */
-.social-pkz .social-icon,
-.social-oto .social-icon {
-  background: #fff;
-}

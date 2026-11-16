@@ -10,7 +10,7 @@ import { ROTAS } from "../data/seo.js";
 import portalCss from "../styles/portal.css?inline";
 import homeCss from "../styles/home.css?inline";
 
-// Página inicial (rota /): mostra que PKZ e One To One são um só ecossistema, no mesmo
+// Página inicial (rota /): mostra que PKZ, One To One e Fisioterapia são um só ecossistema, no mesmo
 // endereço, e leva a pessoa para cada uma. Substitui o portal do halter (pages/Portal.jsx, hoje sem uso).
 // O texto de cada marca é o mesmo das páginas dela; nada foi inventado.
 const ECOSSISTEMA = [
@@ -32,13 +32,22 @@ const ECOSSISTEMA = [
     logo: { src: "img/logos/one-to-one-branco.svg", largura: 140, altura: 47 },
     cta: "Conhecer a One To One",
   },
+  {
+    id: "fisio",
+    passo: "3 · Recupere",
+    nome: "Fisioterapia",
+    texto: "Reabilitação, pós-operatório e prevenção de lesões com atendimento individual.",
+    foto: "img/fisio/equipe",
+    logo: { src: "img/logos/fisio-provisorio-branco.svg", largura: 260, altura: 60 },
+    cta: "Conhecer a Fisioterapia",
+  },
 ];
 
 const MANIFESTO =
-  "Treinar e evoluir fazem parte do mesmo caminho. Por isso o treino de alto rendimento e o acompanhamento individual ficam juntos, no mesmo endereço.";
+  "Treinar, evoluir e se recuperar fazem parte do mesmo caminho. Por isso o treino de alto rendimento, o acompanhamento individual e a fisioterapia ficam juntos, no mesmo endereço.";
 
 const NUMEROS = [
-  { valor: 2, rotulo: "especialidades" },
+  { valor: 3, rotulo: "especialidades" },
   { valor: 1, rotulo: "endereço" },
   { valor: MARCAS.pkz.horarios.dias.length, rotulo: "dias de aula por semana" },
 ];
@@ -59,13 +68,8 @@ export default function Home() {
       <div className="scroll-progress" aria-hidden="true"></div>
 
       <header className="home-header">
-        {/* Logos oficiais das duas marcas como assinatura do topo; o nome acessível fica no link, as imagens são decorativas */}
-        <LinkInterno to="/" className="home-marca" aria-label="PKZ Lab e Studio One To One, início">
-          <img src={asset("img/logos/pkz-lab-horizontal-branco.svg")} alt="" width="849" height="255" />
-          <span className="home-marca-amp" aria-hidden="true">
-            &amp;
-          </span>
-          <img src={asset("img/logos/one-to-one-branco.svg")} alt="" width="140" height="47" />
+        <LinkInterno to="/" className="home-marca">
+          Um só endereço
         </LinkInterno>
         <nav className="home-nav" aria-label="Principal">
           {ECOSSISTEMA.map((m) => (
@@ -78,7 +82,7 @@ export default function Home() {
 
       <main id="main" tabIndex={-1}>
         <section className="home-hero" aria-labelledby="home-titulo">
-          {/* As duas equipes lado a lado: a mesma cena, duas especialidades. Decorativas. */}
+          {/* As três equipes lado a lado: a mesma cena, três especialidades. Decorativas. */}
           <div className="tri" aria-hidden="true">
             {ECOSSISTEMA.map((m, i) => (
               <div className="tri-faixa" data-marca={m.id} key={m.id}>
@@ -87,8 +91,8 @@ export default function Home() {
                   srcSet={srcsetDe(m.foto)}
                   sizes="(min-width: 768px) 34vw, 100vw"
                   alt=""
-                  width={2760}
-                  height={1504}
+                  width={m.id === "fisio" ? 2000 : 2760}
+                  height={m.id === "fisio" ? 1116 : 1504}
                   decoding="async"
                   fetchPriority={i === 0 ? "high" : undefined}
                 />
@@ -100,22 +104,22 @@ export default function Home() {
           <div className="sombra" aria-hidden="true"></div>
 
           <div className="hero-texto">
-            <h1 id="home-titulo" aria-label="Um só endereço, duas especialidades">
-              {"Um só endereço, duas especialidades".split(" ").map((palavra, i) => (
+            <h1 id="home-titulo" aria-label="Um só endereço, três especialidades">
+              {"Um só endereço, três especialidades".split(" ").map((palavra, i) => (
                 <span className="pal" aria-hidden="true" key={i}>
                   <span className="pal-i">{palavra}</span>{" "}
                 </span>
               ))}
             </h1>
-            <p>Treino de alto rendimento e acompanhamento individual, na Barra da Tijuca.</p>
+            <p>Treino de alto rendimento, acompanhamento individual e reabilitação, na Barra da Tijuca.</p>
             <LinkInterno to="/" secao="ecossistema" className="btn btn-home">
               Escolher por onde começar
             </LinkInterno>
           </div>
         </section>
 
-        {/* Faixa de logos em loop: reforça que as duas fazem parte do mesmo lugar */}
-        <FaixaRolante rotulo="As duas especialidades: Treine e Evolua" className="faixa-marcas" duracao={45}>
+        {/* Faixa de logos em loop: reforça que as três fazem parte do mesmo lugar */}
+        <FaixaRolante rotulo="As três especialidades: Treine, Evolua e Recupere" className="faixa-marcas" duracao={45}>
           {Array.from({ length: 3 }).flatMap((_, volta) =>
             ECOSSISTEMA.map((m) => (
               <li className="faixa-marca" data-marca={m.id} key={`${volta}-${m.id}`} aria-hidden={volta > 0 || undefined}>
@@ -138,13 +142,14 @@ export default function Home() {
 
         <section id="ecossistema" className="eco" aria-labelledby="eco-titulo">
           <h2 id="eco-titulo">Escolha por onde começar</h2>
-          <p className="eco-sub">Você pode começar por qualquer uma. As duas ficam no mesmo endereço.</p>
+          <p className="eco-sub">Você pode começar por qualquer uma. As três ficam no mesmo endereço.</p>
 
           <div className="eco-grid">
             <div className="fio" aria-hidden="true">
               <span className="fio-linha"></span>
-              <span className="fio-no" style={{ left: "25%" }}></span>
-              <span className="fio-no" style={{ left: "75%" }}></span>
+              <span className="fio-no" style={{ left: "16.6%" }}></span>
+              <span className="fio-no" style={{ left: "50%" }}></span>
+              <span className="fio-no" style={{ left: "83.4%" }}></span>
             </div>
             {ECOSSISTEMA.map((m) => (
               <article className="eco-card" data-marca={m.id} key={m.id}>
@@ -154,8 +159,8 @@ export default function Home() {
                   srcSet={srcsetDe(m.foto)}
                   sizes="(min-width: 960px) 33vw, 100vw"
                   alt=""
-                  width={2760}
-                  height={1504}
+                  width={m.id === "fisio" ? 2000 : 2760}
+                  height={m.id === "fisio" ? 1116 : 1504}
                   decoding="async"
                   loading="lazy"
                 />

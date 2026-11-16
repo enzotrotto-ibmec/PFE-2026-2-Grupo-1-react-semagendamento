@@ -1,6 +1,6 @@
 import { lenis } from "./rolagem.js";
 
-// Ajudante para o <dialog> nativo do HTML, usado pelas janelas de contato e de agendamento.
+// Ajudante para o <dialog> nativo do HTML, usado pela janela de contato.
 //
 // O componente da janela só é renderizado quando ela está aberta ({aberto && <dialog ...>}).
 // Passamos esta função no atributo ref do <dialog>: o React a chama com o elemento logo que

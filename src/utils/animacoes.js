@@ -12,9 +12,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Blocos de uma seção: desce pelos wrappers de filho único e abre as grades,
 // para cada card/destaque/linha animar sozinho.
-const GRADES = ".card-grid, .about-highlights, .cta-band, .numeros-grid";
+const GRADES = ".card-grid, .about-highlights, .fisio-etapas, .cta-band, .numeros-grid";
 // Estes têm movimento próprio (seção travada + acende em sequência): ficam fora da entrada genérica
-const PROPRIOS = ".about-lead, .highlight-item";
+const PROPRIOS = ".about-lead, .highlight-item, .fisio-etapas";
 function blocosDe(secao) {
   let filhos = [...secao.children];
   while (filhos.length === 1 && filhos[0].children.length) filhos = [...filhos[0].children];
@@ -45,6 +45,14 @@ function dividirPalavras(el) {
     no.replaceWith(frag);
   });
   return { palavras, reverter: () => (el.innerHTML = original) };
+}
+
+// Altura do bloco sem o espaço que o pin acrescenta (um filho travado vira .pin-spacer, bem mais alto).
+// Duas colunas (grade com mais de uma coluna): vale a maior; uma coluna: a soma.
+function alturaNatural(bloco) {
+  const alturas = [...bloco.children].map((c) => (c.classList.contains("pin-spacer") ? c.firstElementChild : c).offsetHeight);
+  const colunas = getComputedStyle(bloco).gridTemplateColumns.split(" ").filter(Boolean).length;
+  return colunas > 1 ? Math.max(...alturas) : alturas.reduce((a, b) => a + b, 0);
 }
 
 // Trava a seção no meio da tela e roda a linha do tempo conforme a rolagem (a página só volta a descer
@@ -139,7 +147,7 @@ export function useMenuEscalonado(aberto, areaRef, aoFechar) {
 
 // Cards com profundidade (tilt 3D + brilho que segue o mouse) e botões "magnéticos".
 // Só em dispositivos com mouse; o toque não tem hover.
-const CARTOES = ".eco-card, .service-card, .cross-brand-card, .sport-card, .team-support-card, .trust-card, .numero-card";
+const CARTOES = ".eco-card, .service-card, .fisio-card, .cross-brand-card, .sport-card, .team-support-card, .trust-card, .numero-card";
 function ligarInteracoes(raiz) {
   if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return () => {};
 
@@ -206,9 +214,9 @@ export function useAnimacoesScroll(raizRef) {
       gsap.to(".hero-image img", { yPercent: 10, scale: 1.1, ease: "none", scrollTrigger: saida });
       gsap.to(".hero-shader", { yPercent: 20, opacity: 0.3, ease: "none", scrollTrigger: saida });
 
-      // todas as outras seções: cada bloco sobe e aparece conforme entra na tela.
-      // O rodapé fica de fora: no fim da página ele nunca chega ao ponto de 100% e ficava apagado.
+      // todas as outras seções e o rodapé: cada bloco sobe e aparece conforme entra na tela
       const secoes = gsap.utils.toArray("main > section").filter((s) => !s.closest(".hero-wrap"));
+      secoes.push(...gsap.utils.toArray(".site-footer-page"));
       secoes.forEach((secao) => {
         blocosDe(secao).forEach((el, i) => {
           // Já está dentro da tela ao abrir: nasce visível. Senão a rolagem ainda não "terminou" de
@@ -236,7 +244,7 @@ export function useAnimacoesScroll(raizRef) {
       });
 
       // imagens: "zoom out" suave enquanto o card atravessa a tela
-      gsap.utils.toArray(".service-img-wrapper img, .about-container img").forEach((img) => {
+      gsap.utils.toArray(".service-img-wrapper img, .fisio-etapas-img img, .about-container img").forEach((img) => {
         gsap.fromTo(img, { scale: 1.25 }, {
           scale: 1, ease: "none",
           scrollTrigger: { trigger: img, start: "top bottom", end: "bottom 45%", scrub: 0.8 },
@@ -245,7 +253,7 @@ export function useAnimacoesScroll(raizRef) {
 
     }, raiz);
 
-    // Seção "Sobre": travada + acende em sequência. Ficam num contexto próprio porque
+    // Sobre e etapas da Fisioterapia: seção travada + acende em sequência. Ficam num contexto próprio porque
     // "trava ou não" depende do tamanho da tela e é refeito se ele mudar (zoom, girar o celular, imagens que carregam).
     // Travar uma seção mais alta que a tela cortaria o conteúdo, então nesse caso não há pin.
     const sequencias = [];
@@ -262,6 +270,25 @@ export function useAnimacoesScroll(raizRef) {
           tl.fromTo(palavras, { opacity: 0.2 }, { opacity: 1, duration: 0.3, stagger: 0.15 })
             .fromTo(itens, { opacity: 0.2, y: 24 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.4 }, ">-0.2")
             .to({}, { duration: 0.4 });
+        },
+      });
+    });
+    gsap.utils.toArray(".fisio-etapas").forEach((bloco) => {
+      const etapas = gsap.utils.toArray(".fisio-lista li", bloco);
+      const fill = bloco.querySelector(".fisio-linha-fill");
+      if (!etapas.length) return;
+      sequencias.push({
+        // se o bloco inteiro não cabe na tela (celular), trava só a coluna das etapas
+        alvo: () => (alturaNatural(bloco) <= window.innerHeight * 0.95 ? bloco : bloco.querySelector(".fisio-etapas-texto") || bloco),
+        montar: (tl) => {
+          // Fisioterapia: as etapas acendem uma a uma, com a linha se enchendo junto
+          etapas.forEach((li, i) => {
+            const num = li.querySelector(".fisio-num");
+            tl.fromTo(li, { opacity: 0.25 }, { opacity: 1, duration: 0.5 }, i);
+            if (num) tl.fromTo(num, { scale: 0.8 }, { scale: 1, duration: 0.5 }, i);
+          });
+          if (fill) tl.fromTo(fill, { scaleY: 0 }, { scaleY: 1, transformOrigin: "top", duration: etapas.length - 0.5 }, 0);
+          tl.to({}, { duration: 0.5 });
         },
       });
     });

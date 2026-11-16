@@ -1,12 +1,12 @@
 import { IconeSetaCima, IconeWhatsapp } from "../Icones.jsx";
-import { linkWhatsapp } from "../../utils/agendamento.js";
+import { linkWhatsapp } from "../../utils/whatsapp.js";
 import { voltarAoTopo } from "../../utils/navegacao.js";
 
 // Botões flutuantes: voltar ao topo e (no desktop) WhatsApp.
 //
 // Props:
 //   marca         → objeto da marca
-//   comWhatsapp   → mostra o botão redondo do WhatsApp (as páginas de agendamento não têm)
+//   comWhatsapp   → mostra o botão redondo do WhatsApp
 //
 // No vanilla o "voltar ao topo" aparecia depois de 300px de rolagem com um listener de scroll.
 // Ouvir o scroll da janela num componente pede o hook useEffect, que ainda vamos ver em aula;

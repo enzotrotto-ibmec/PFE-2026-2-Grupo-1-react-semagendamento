@@ -39,39 +39,33 @@ export default function Privacidade() {
         <p>
           A PKZ Lab e o Studio One To One funcionam no mesmo endereço: Av. Armando Lombardi, 949, Loja
           G, Barra da Tijuca, Rio de Janeiro — RJ. Neste texto, "nós" significa as duas marcas, que
-          decidem como os dados são usados no agendamento da aula experimental.
+          decidem como os dados são usados no contato pelo WhatsApp.
         </p>
 
         <h2>Quais dados coletamos</h2>
-        <p>Ao agendar uma aula experimental, você informa:</p>
-        <ul>
-          <li>nome completo;</li>
-          <li>telefone / WhatsApp;</li>
-          <li>CPF;</li>
-          <li>modalidade, dia e horário escolhidos;</li>
-          <li>dúvida ou observação, se quiser escrever (opcional).</li>
-        </ul>
-        <p>Se você apenas nos chamar pelo WhatsApp, recebemos o que escrever na conversa e o seu número.</p>
+        <p>
+          Este site não tem formulário de cadastro. Na janela de contato você pode informar o seu nome,
+          que entra na mensagem pronta do WhatsApp. Ao nos chamar pelo WhatsApp, recebemos o que você
+          escrever na conversa e o seu número.
+        </p>
 
         <h2>Para que usamos os dados</h2>
         <p>
-          Para agendar e confirmar a sua aula experimental, responder à sua mensagem e manter o
-          controle interno dos agendamentos. Não usamos os dados para outras finalidades sem avisar
-          você antes.
+          Para responder à sua mensagem e combinar a sua aula experimental ou avaliação. Não usamos os
+          dados para outras finalidades sem avisar você antes.
         </p>
 
         <h2>Base legal</h2>
         <p>
-          Tratamos os dados com o seu <strong>consentimento</strong> (LGPD, art. 7º, I), dado ao marcar
-          a caixa de autorização no formulário. Quando o agendamento for um passo prévio à contratação
-          de um plano, também pode se aplicar a base de procedimentos preliminares relacionados a
-          contrato (art. 7º, V).
+          Tratamos os dados com o seu <strong>consentimento</strong> (LGPD, art. 7º, I), dado ao enviar
+          a mensagem pelo WhatsApp. Quando o contato for um passo prévio à contratação de um plano,
+          também pode se aplicar a base de procedimentos preliminares relacionados a contrato (art. 7º, V).
         </p>
 
         <h2>Como os dados são enviados</h2>
         <p>
           Este site não tem servidor próprio e <strong>não guarda</strong> os dados que você digita. Ao
-          confirmar, o site abre o WhatsApp com a mensagem já pronta. Os dados só chegam até nós quando
+          clicar no botão, o site abre o WhatsApp com a mensagem já pronta. Os dados só chegam até nós quando
           você envia a mensagem no WhatsApp. Se não enviar, nada é enviado.
         </p>
 
@@ -83,7 +77,7 @@ export default function Privacidade() {
 
         <h2>Por quanto tempo guardamos</h2>
         <p>
-          Pelo tempo necessário para realizar o agendamento e manter o controle interno. Depois disso,
+          Pelo tempo necessário para atender ao seu contato. Depois disso,
           os dados podem ser eliminados, salvo se a lei exigir que sejam mantidos.
         </p>
 
@@ -96,7 +90,7 @@ export default function Privacidade() {
           <li>informação sobre com quem os dados foram compartilhados;</li>
           <li>revogação do consentimento.</li>
         </ul>
-        <p>Para isso, envie uma mensagem pelo mesmo WhatsApp usado no agendamento, informado neste site.</p>
+        <p>Para isso, envie uma mensagem pelo WhatsApp informado neste site.</p>
 
         <h2>Cookies e serviços de terceiros</h2>
         <p>
@@ -107,8 +101,8 @@ export default function Privacidade() {
 
         <h2>Crianças e adolescentes</h2>
         <p>
-          A PKZ atende menores de idade. Nesses casos, o responsável legal deve preencher o formulário ou
-          autorizar o preenchimento, e o consentimento é dado por ele (LGPD, art. 14).
+          A PKZ atende menores de idade. Nesses casos, o contato deve ser feito pelo responsável legal
+          ou com a autorização dele, e o consentimento é dado por ele (LGPD, art. 14).
         </p>
 
         <h2>Atualizações</h2>

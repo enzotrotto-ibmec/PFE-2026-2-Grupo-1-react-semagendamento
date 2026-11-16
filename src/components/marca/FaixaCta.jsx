@@ -1,18 +1,14 @@
-import LinkInterno from "../LinkInterno.jsx";
 import BotaoWhatsapp from "./BotaoWhatsapp.jsx";
 
-// Faixa de conversão: título + "Agendar aula" + WhatsApp. Props: marca
+// Faixa de conversão: título + botão do WhatsApp. Props: marca
 export default function FaixaCta({ marca }) {
   return (
     <section className="cta-band" aria-labelledby="cta-band-title">
       <div className="cta-band-text">
         <h2 id="cta-band-title">{marca.ctaBand.titulo}</h2>
-        <p className="cta-band-sub">Escolha o melhor horário e fale com a equipe.</p>
+        <p className="cta-band-sub">Fale com a equipe e combine o melhor horário.</p>
       </div>
       <div className="cta-band-actions">
-        <LinkInterno to={`${marca.rota}/aula-experimental`} className="btn cta-btn cta-btn-primary botao-estrela">
-          Agendar aula
-        </LinkInterno>
         <BotaoWhatsapp marca={marca} />
       </div>
     </section>

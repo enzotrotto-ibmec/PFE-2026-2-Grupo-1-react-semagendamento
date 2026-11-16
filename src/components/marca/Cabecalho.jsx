@@ -2,7 +2,7 @@ import { useCallback, useRef, useState } from "react";
 import LinkInterno from "../LinkInterno.jsx";
 import { IconeSetaVoltar } from "../Icones.jsx";
 import { asset } from "../../utils/asset.js";
-import { outraMarca } from "../../data/marcas.js";
+import { MARCAS, outraMarca } from "../../data/marcas.js";
 import { useMenuEscalonado } from "../../utils/animacoes.js";
 
 // Cabeçalho das páginas das marcas: voltar ao início, link para a outra marca, logo e menu.
@@ -41,14 +41,8 @@ export default function Cabecalho({ marca, onAbrirContato, contatoDestacado = fa
             <IconeSetaVoltar />
             <span className="back-text">Início</span>
           </LinkInterno>
-          {/* Só a logo da outra marca; na One To One (fundo claro) o CSS escurece a PKZ, que só existe em branco */}
-          <LinkInterno to={outra.rota} className="cross-brand-nav-link" aria-label={`Ir para ${outra.nome}`}>
-            <img
-              src={asset(outra.id === "oto" ? "img/logos/one-to-one-branco.svg" : "img/logos/pkz-lab-horizontal-branco.svg")}
-              alt=""
-              width={outra.id === "oto" ? 140 : 849}
-              height={outra.id === "oto" ? 47 : 255}
-            />
+          <LinkInterno to={outra.rota} className="cross-brand-nav-link">
+            {outra.nome} →
           </LinkInterno>
         </div>
 
@@ -100,6 +94,13 @@ export default function Cabecalho({ marca, onAbrirContato, contatoDestacado = fa
                 Localização
               </LinkInterno>
             </li>
+            {marca.id !== "fisio" && (
+              <li>
+                <LinkInterno to={MARCAS.fisio.rota} className="nav-link" onClick={fecharMenu}>
+                  {MARCAS.fisio.nome}
+                </LinkInterno>
+              </li>
+            )}
             <li>
               {/* Não troca de página, só abre a janela: por isso é <button>, não link */}
               <button

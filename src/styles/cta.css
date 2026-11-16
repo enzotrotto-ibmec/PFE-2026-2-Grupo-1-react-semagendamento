@@ -45,6 +45,12 @@
     #014c6f;
 }
 
+[data-brand="fisio"] {
+  --cta-band-bg:
+    radial-gradient(circle at 100% 0, rgba(45, 212, 191, 0.35), transparent 55%),
+    #0f5f58;
+}
+
 /* ---------- Botões ---------- */
 .cta-btn {
   gap: 0.625rem;
@@ -181,7 +187,7 @@ section.cta-band {
   }
 }
 
-/* ---------- Barra fixa de baixo (Agendar aula e WhatsApp) ---------- */
+/* ---------- Barra fixa de baixo (WhatsApp) ---------- */
 
 /* Celular e tablet (até 1100px) */
 .mobile-cta {
@@ -277,9 +283,4 @@ html {
   to {
     --estrela-angulo: 360deg;
   }
-}
-
-/* Ícone do WhatsApp na cor oficial (#25D366) */
-.cta-icon {
-  fill: #25d366;
 }

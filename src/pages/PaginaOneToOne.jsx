@@ -7,7 +7,7 @@ import FaixaCta from "../components/marca/FaixaCta.jsx";
 import Localizacao from "../components/marca/Localizacao.jsx";
 import ConhecaTambem from "../components/marca/ConhecaTambem.jsx";
 import SecaoServicos from "../components/one-to-one/SecaoServicos.jsx";
-import LinkInterno from "../components/LinkInterno.jsx";
+import { linkWhatsapp } from "../utils/whatsapp.js";
 import { MARCAS } from "../data/marcas.js";
 import { ROTAS } from "../data/seo.js";
 
@@ -31,13 +31,8 @@ const DESTAQUES = [
 
 const PERGUNTAS = [
   {
-    pergunta: "Como agendo a aula experimental?",
-    resposta: (
-      <>
-        Escolha o dia e o horário na página{" "}
-        <LinkInterno to="/one-to-one/aula-experimental">Aula Experimental</LinkInterno> e envie o pedido pelo WhatsApp.
-      </>
-    ),
+    pergunta: "Como marco a aula experimental?",
+    resposta: "Pelo botão de WhatsApp desta página: a equipe responde e combina o melhor dia e horário com você.",
   },
   {
     pergunta: "Quais serviços vocês oferecem?",
@@ -67,7 +62,7 @@ export default function PaginaOneToOne() {
       <Hero
         titulo="Evolua com Propósito"
         subtitulo="Atendimento individualizado e ambiente sofisticado."
-        botao={{ texto: "Aula Experimental", to: "/one-to-one/aula-experimental", comCaixa: true }}
+        botao={{ texto: "Aula Experimental", href: linkWhatsapp(marca.whatsapp, marca.contato.mensagem(marca.contato.nomePadrao)), comCaixa: true }}
         imagem={{ base: "img/one-to-one/equipe", alt: "Equipe multidisciplinar" }}
       />
 

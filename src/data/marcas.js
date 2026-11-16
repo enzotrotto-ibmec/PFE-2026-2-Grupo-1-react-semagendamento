@@ -2,7 +2,7 @@
 // Os componentes recebem a marca por props e leem daqui o nome, o WhatsApp, os textos etc.
 // Chaves: "pkz" (PKZ Lab) e "oto" (Studio One To One).
 
-// Horários de aula. dow = Date.getDay() (0 = domingo), usado para pré-selecionar o dia de hoje.
+// Dias e horários de funcionamento (usados na faixa de números das páginas).
 // Ajuste aos horários reais; hoje é idêntico nas duas marcas.
 const horarios = {
   dias: [
@@ -33,7 +33,7 @@ export const MARCAS = {
     id: "pkz",
     nome: "PKZ Lab",
     nomeCurto: "PKZ",
-    nomeEquipe: "PKZ Lab", // como a equipe é chamada na mensagem do WhatsApp e na autorização de dados
+    nomeEquipe: "PKZ Lab", // como a equipe é chamada na mensagem do WhatsApp
     rota: "/pkz", // endereço da página da marca no React Router
     corTema: "#020b18", // <meta name="theme-color">
     // Placeholder (DDI + DDD + número, só dígitos). Troque o número real AQUI.
@@ -90,9 +90,42 @@ export const MARCAS = {
     horarios,
     endereco,
   },
+  // Marca independente (só divide o endereço com PKZ e One To One).
+  // PROVISÓRIO: nome, textos, WhatsApp e Instagram são placeholders, trocar quando a marca definir.
+  fisio: {
+    id: "fisio",
+    nome: "Fisioterapia",
+    nomeCurto: "Fisioterapia",
+    nomeEquipe: "Fisioterapia",
+    rota: "/fisioterapia",
+    corTema: "#ffffff",
+    whatsapp: "5521000000000",
+    logo: { src: "img/logos/fisio-provisorio.svg", largura: 260, altura: 60 },
+    logoFaq: { src: "img/logos/fisio-provisorio.svg", largura: 260, altura: 60 },
+    instagram: null, // PROVISÓRIO: ainda sem perfil; o rodapé e o FAQ escondem o Instagram enquanto for null
+    rodape: {
+      frase: "Reabilitação e movimento com cuidado individual, na Barra da Tijuca.",
+      direitos: "Fisioterapia",
+    },
+    contato: {
+      titulo: "Vamos cuidar de você",
+      texto: "Fale com nossa equipe pelo WhatsApp e agende sua avaliação.",
+      rotulo: "Como gostaria de ser chamado?",
+      placeholder: "Digite seu nome",
+      botao: "Falar com a equipe →",
+      nomePadrao: "um visitante",
+      mensagem: (nome) => `Olá! Me chamo ${nome} e gostaria de agendar uma avaliação de fisioterapia.`,
+    },
+    ctaBand: { titulo: "Movimente-se sem dor" },
+    // texto do card "Conheça também" nas páginas das outras marcas
+    resumo: "Reabilitação, pós-operatório e prevenção de lesões, com atendimento individual no mesmo endereço.",
+    modalidades: ["Reabilitação", "Pós-operatório", "Prevenção de lesões", "Pilates clínico"],
+    horarios,
+    endereco,
+  },
 };
 
 // A "outra" marca: usada no link "Studio One To One →" do cabeçalho e no card "Conheça também".
 export function outraMarca(id) {
-  return id === "oto" ? MARCAS.pkz : MARCAS.oto; // a PKZ aponta para a One To One e vice-versa
+  return id === "oto" ? MARCAS.pkz : MARCAS.oto; // PKZ e Fisioterapia apontam para a One To One
 }

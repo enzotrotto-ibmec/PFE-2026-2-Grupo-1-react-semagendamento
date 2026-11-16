@@ -8,7 +8,7 @@ import Localizacao from "../components/marca/Localizacao.jsx";
 import ConhecaTambem from "../components/marca/ConhecaTambem.jsx";
 import SecaoFamilia from "../components/pkz/SecaoFamilia.jsx";
 import SecaoEsportes from "../components/pkz/SecaoEsportes.jsx";
-import LinkInterno from "../components/LinkInterno.jsx";
+import { linkWhatsapp } from "../utils/whatsapp.js";
 import { MARCAS } from "../data/marcas.js";
 import { ROTAS } from "../data/seo.js";
 
@@ -31,13 +31,8 @@ const DESTAQUES = [
 
 const PERGUNTAS = [
   {
-    pergunta: "Como agendo a aula experimental?",
-    resposta: (
-      <>
-        Escolha o dia e o horário na página{" "}
-        <LinkInterno to="/pkz/aula-experimental">Aula Experimental</LinkInterno> e envie o pedido pelo WhatsApp.
-      </>
-    ),
+    pergunta: "Como marco a aula experimental?",
+    resposta: "Pelo botão de WhatsApp desta página: a equipe responde e combina o melhor dia e horário com você.",
   },
   {
     pergunta: "Quais esportes vocês atendem?",
@@ -71,7 +66,7 @@ export default function PaginaPkz() {
       <Hero
         titulo="Treine Como um Profissional"
         subtitulo="Alto rendimento e performance garantida."
-        botao={{ texto: "Aula Experimental", to: "/pkz/aula-experimental" }}
+        botao={{ texto: "Aula Experimental", href: linkWhatsapp(marca.whatsapp, marca.contato.mensagem(marca.contato.nomePadrao)) }}
         imagem={{ base: "img/pkz/EquipePKZ", alt: "Corpo técnico da PKZ" }}
       />
 

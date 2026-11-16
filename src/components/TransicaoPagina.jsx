@@ -9,12 +9,14 @@ import { asset } from "../utils/asset.js";
 const CORES = {
   "/pkz": ["#020b18", "#0a2d6e"],
   "/one-to-one": ["#014c6f", "#00bbff"],
+  "/fisioterapia": ["#0f5f58", "#2dd4bf"],
 };
 const PADRAO = ["#07111e", "#0a2d6e"];
 // Logo branco de cada marca (o mesmo do cabeçalho/rodapé). Sem logo (home, privacidade): só a cortina.
 const LOGOS = {
   "/pkz": { src: "img/logos/pkz-lab-horizontal-branco.svg", largura: 849, altura: 255, nome: "PKZ Lab" },
   "/one-to-one": { src: "img/logos/one-to-one-branco.svg", largura: 140, altura: 47, nome: "Studio One To One" },
+  "/fisioterapia": { src: "img/logos/fisio-provisorio-branco.svg", largura: 260, altura: 60, nome: "Fisioterapia" },
 };
 
 export default function TransicaoPagina() {

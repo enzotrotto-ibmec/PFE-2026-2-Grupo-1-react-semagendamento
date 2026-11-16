@@ -14,42 +14,37 @@ const NOME_SITE = "PKZ Lab & Studio One To One";
 
 export const ROTAS = {
   "/": {
-    titulo: "PKZ Lab e One To One | Barra da Tijuca, RJ",
+    titulo: "PKZ Lab, One To One e Fisioterapia | Barra da Tijuca, RJ",
     descricao:
-      "PKZ Lab (treino de alto rendimento) e Studio One To One (personal training e nutrição) no mesmo endereço, na Barra da Tijuca, Rio de Janeiro.",
+      "PKZ Lab (treino de alto rendimento), Studio One To One (personal training e nutrição) e Fisioterapia no mesmo endereço, na Barra da Tijuca, Rio de Janeiro.",
     imagem: "img/portal/LandingPKZ-1280.webp",
-    marcas: ["pkz", "oto"], // dados estruturados das duas, no mesmo endereço
+    marcas: ["pkz", "oto", "fisio"], // dados estruturados das três, no mesmo endereço
   },
   "/pkz": {
     titulo: "PKZ Lab | Treino de alto rendimento na Barra da Tijuca",
     descricao:
-      "PKZ Lab: treino esportivo de alto rendimento para todas as idades na Barra da Tijuca. Karatê, jiu-jitsu, vôlei e mais. Agende sua aula experimental.",
+      "PKZ Lab: treino esportivo de alto rendimento para todas as idades na Barra da Tijuca. Karatê, jiu-jitsu, vôlei e mais. Fale com a equipe pelo WhatsApp.",
     imagem: "img/portal/LandingPKZ-1280.webp",
     marca: "pkz",
-  },
-  "/pkz/aula-experimental": {
-    titulo: "Aula Experimental | PKZ Lab",
-    descricao:
-      "Escolha o dia e o horário da sua aula experimental no PKZ Lab, na Barra da Tijuca, e envie o pedido pelo WhatsApp.",
-    imagem: "img/portal/LandingPKZ-1280.webp",
   },
   "/one-to-one": {
     titulo: "Studio One To One | Personal Training na Barra da Tijuca",
     descricao:
-      "Studio One To One: personal training, fisioterapia e nutrição com atendimento individual na Barra da Tijuca. Agende sua aula experimental pelo WhatsApp.",
+      "Studio One To One: personal training, fisioterapia e nutrição com atendimento individual na Barra da Tijuca. Fale com a equipe pelo WhatsApp.",
     imagem: "img/portal/LandingOneToOne-1280.webp",
     marca: "oto",
   },
-  "/one-to-one/aula-experimental": {
-    titulo: "Aula Experimental | Studio One To One",
+  "/fisioterapia": {
+    titulo: "Fisioterapia | Reabilitação e movimento na Barra da Tijuca",
     descricao:
-      "Escolha o dia e o horário da sua aula experimental no Studio One To One, na Barra da Tijuca, e envie o pedido pelo WhatsApp.",
-    imagem: "img/portal/LandingOneToOne-1280.webp",
+      "Fisioterapia na Barra da Tijuca: reabilitação ortopédica, pós-operatório, prevenção de lesões e pilates clínico com atendimento individual. Agende no WhatsApp.",
+    imagem: "img/fisio/equipe-1280.webp",
+    marca: "fisio",
   },
   "/privacidade": {
     titulo: "Política de Privacidade | PKZ Lab e Studio One To One",
     descricao:
-      "Como o PKZ Lab e o Studio One To One tratam os dados informados no agendamento de aula experimental e no contato pelo WhatsApp.",
+      "Como o PKZ Lab e o Studio One To One tratam os dados informados no contato pelo WhatsApp.",
     imagem: "img/portal/LandingPKZ-1280.webp",
   },
 };
@@ -67,7 +62,7 @@ const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").repl
 function dadosDaMarca(id, urlDe, imagemDe) {
   const marca = MARCAS[id];
   const dados = {
-    "@type": "SportsActivityLocation",
+    "@type": id === "fisio" ? "Physiotherapy" : "SportsActivityLocation",
     name: marca.nome,
     description: ROTAS[marca.rota].descricao,
     address: {
@@ -85,7 +80,7 @@ function dadosDaMarca(id, urlDe, imagemDe) {
   return dados;
 }
 
-// Página de uma marca: um negócio. Home (campo "marcas"): as duas no mesmo endereço, em @graph.
+// Página de uma marca: um negócio. Home (campo "marcas"): as três no mesmo endereço, em @graph.
 function schemaDaPagina(pagina, urlDe, imagemDe) {
   const base = { "@context": "https://schema.org" };
   const dados = pagina.marca

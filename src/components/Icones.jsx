@@ -1,8 +1,6 @@
 // Ícones SVG usados em mais de um lugar. Cada ícone é um componente: <IconeSeta />, <IconeInstagram /> ...
 // (No JSX os atributos com hífen viram camelCase: stroke-width → strokeWidth.)
 
-import { useId } from "react";
-
 // Propriedades comuns dos ícones de traço (estilo "Feather")
 const traco = {
   fill: "none",
@@ -32,23 +30,12 @@ export function IconeWhatsapp({ className }) {
   );
 }
 
-// Instagram com o degradê oficial (amarelo, laranja, rosa, roxo). O id do degradê é único por ícone (useId).
 export function IconeInstagram() {
-  const id = `ig-${useId().replace(/:/g, "")}`;
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" strokeWidth="2" {...traco} stroke={`url(#${id})`}>
-      <defs>
-        <linearGradient id={id} x1="0" y1="1" x2="1" y2="0">
-          <stop offset="0" stopColor="#FEDA75" />
-          <stop offset="0.3" stopColor="#FA7E1E" />
-          <stop offset="0.55" stopColor="#D62976" />
-          <stop offset="0.8" stopColor="#962FBF" />
-          <stop offset="1" stopColor="#4F5BD5" />
-        </linearGradient>
-      </defs>
+    <svg width="20" height="20" viewBox="0 0 24 24" strokeWidth="2" {...traco}>
       <rect x="3" y="3" width="18" height="18" rx="5" />
       <circle cx="12" cy="12" r="4" />
-      <circle cx="17.5" cy="6.5" r="0.6" fill={`url(#${id})`} />
+      <circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" />
     </svg>
   );
 }

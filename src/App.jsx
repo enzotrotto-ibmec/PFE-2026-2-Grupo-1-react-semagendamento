@@ -4,7 +4,7 @@ import TransicaoPagina from "./components/TransicaoPagina.jsx";
 import Home from "./pages/Home.jsx";
 const PaginaPkz = lazy(() => import("./pages/PaginaPkz.jsx"));
 const PaginaOneToOne = lazy(() => import("./pages/PaginaOneToOne.jsx"));
-const AulaExperimental = lazy(() => import("./pages/AulaExperimental.jsx"));
+const PaginaFisio = lazy(() => import("./pages/PaginaFisio.jsx"));
 const Privacidade = lazy(() => import("./pages/Privacidade.jsx"));
 const NaoEncontrada = lazy(() => import("./pages/NaoEncontrada.jsx"));
 
@@ -14,9 +14,8 @@ const NaoEncontrada = lazy(() => import("./pages/NaoEncontrada.jsx"));
 //   vanilla                                  React
 //   index.html                           →   /
 //   pages/pkz.html                       →   /pkz
-//   pages/pkz-aula-experimental.html     →   /pkz/aula-experimental
 //   pages/one-to-one.html                →   /one-to-one
-//   pages/one-to-one-aula-experimental   →   /one-to-one/aula-experimental
+//   (novo) Fisioterapia                  →   /fisioterapia
 //   pages/privacidade.html               →   /privacidade
 //   404.html                             →   qualquer outro endereço (path="*")
 export default function App() {
@@ -28,9 +27,8 @@ export default function App() {
       <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/pkz" element={<PaginaPkz />} />
-      <Route path="/pkz/aula-experimental" element={<AulaExperimental marca="pkz" />} />
       <Route path="/one-to-one" element={<PaginaOneToOne />} />
-      <Route path="/one-to-one/aula-experimental" element={<AulaExperimental marca="oto" />} />
+      <Route path="/fisioterapia" element={<PaginaFisio />} />
       <Route path="/privacidade" element={<Privacidade />} />
       <Route path="*" element={<NaoEncontrada />} />
       </Routes>

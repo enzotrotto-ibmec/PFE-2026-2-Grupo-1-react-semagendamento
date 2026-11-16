@@ -673,130 +673,6 @@ textarea.modal-input {
   min-height: 5rem;
   font-family: inherit;
 }
-.booking-consent {
-  display: flex;
-  gap: 0.625rem;
-  align-items: flex-start;
-  font-size: var(--fs-sm);
-  color: var(--text-muted);
-  margin: 0.25rem 0 0.75rem;
-  cursor: pointer;
-}
-.booking-consent input {
-  width: 1.125rem;
-  height: 1.125rem;
-  accent-color: var(--accent-ink);
-  flex-shrink: 0;
-  margin-top: 0.1875rem;
-  cursor: pointer;
-}
-.booking-error {
-  color: var(--danger);
-  font-size: var(--fs-sm);
-  margin: -0.5rem 0 0.875rem;
-}
-.booking-confirmation {
-  text-align: center;
-}
-.booking-confirmation p {
-  color: var(--text-muted);
-  line-height: 1.6;
-  margin-bottom: 1.25rem;
-}
-
-/* ============================================================
-   Aula Experimental: agenda (chips de dia + lista de horários)
-   ============================================================ */
-.schedule-section {
-  max-width: 68.75rem;
-}
-.schedule-intro {
-  color: var(--text-muted);
-  max-width: 40rem;
-  margin: 0 auto 2rem;
-}
-/* Celular: os dias ficam numa faixa que rola para o lado */
-.day-chips {
-  position: relative;
-  display: flex;
-  overflow-x: auto;
-  scrollbar-width: none; /* esconde a barra de rolagem da faixa */
-  gap: 0.5rem;
-  margin-inline: -1.125rem;
-  margin-bottom: 1.75rem;
-  padding: 0.5rem 1.25rem;
-}
-.day-chip {
-  flex: 0 0 auto;
-  min-height: 2.75rem;
-  min-width: 3.5rem;
-  padding: 0 1.125rem;
-  border: 1px solid var(--border-strong);
-  border-radius: 999px;
-  background: transparent;
-  color: var(--text-primary);
-  font: inherit;
-  font-weight: 600;
-  cursor: pointer;
-  transition:
-    background-color 0.15s,
-    border-color 0.15s;
-}
-.day-chip:hover {
-  background: var(--hover-bg);
-  border-color: var(--hover-border);
-  color: var(--hover-fg);
-}
-.day-chip[aria-pressed="true"] {
-  background: var(--accent-strong);
-  border-color: var(--accent-ink);
-  color: var(--on-accent);
-  font-weight: 700;
-}
-.time-heading {
-  font-size: var(--fs-lg);
-  font-weight: 600;
-  color: var(--text-muted);
-  margin-bottom: 0.875rem;
-}
-.time-heading:empty {
-  display: none;
-}
-.time-list {
-  list-style: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(6rem, 100%), 1fr));
-  gap: 0.625rem;
-  max-width: 40rem;
-  margin: 0 auto;
-}
-.time-slot {
-  width: 100%;
-  min-height: 2.75rem;
-  padding: 0 0.75rem;
-  border: 1px solid var(--border-slot);
-  border-radius: 10px;
-  background: var(--slot-bg);
-  color: var(--text-primary);
-  font: inherit;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-  cursor: pointer;
-  transition:
-    background-color 0.15s,
-    border-color 0.15s,
-    transform 0.1s;
-}
-.time-slot:hover {
-  background: var(--hover-bg);
-  border-color: var(--hover-border);
-  color: var(--hover-fg);
-}
-.time-slot:active {
-  background: var(--press-bg);
-  color: var(--press-fg);
-  transform: scale(0.97);
-}
 
 /* ============================================================
    Conheça também (cross-brand)
@@ -952,17 +828,6 @@ textarea.modal-input {
   .cross-brand-nav-link {
     display: inline-flex;
   }
-  /* dias: voltam a quebrar linha, sem faixa rolável */
-  .day-chips {
-    flex-wrap: wrap;
-    justify-content: center;
-    overflow-x: visible;
-    margin-inline: 0;
-    padding: 0;
-  }
-  .day-chip {
-    flex: 0 1 auto;
-  }
   .cross-brand-card {
     flex-direction: row;
     align-items: center;
@@ -1069,7 +934,6 @@ textarea.modal-input {
   .hero-section,
   .about-section,
   .services-section,
-  .schedule-section,
   .location-section,
   .cross-brand-section,
   .footer-inner,
@@ -1080,7 +944,6 @@ textarea.modal-input {
   .hero-section,
   .about-section,
   .services-section,
-  .schedule-section,
   .location-section,
   .cross-brand-section {
     padding-inline: 0;
@@ -1208,15 +1071,6 @@ textarea.modal-input {
     margin-top: 0;
   }
 
-  /* Agenda: texto de apoio com medida de leitura, horários em grade larga */
-  .schedule-intro {
-    max-width: 60ch;
-  }
-  .time-list {
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 8rem), 1fr));
-    max-width: none;
-  }
-
   /* Conheça também */
   .cross-brand-card {
     padding: 2.5rem 3rem;
@@ -1295,6 +1149,7 @@ select:focus-visible {
 /* Cards: borda em degradê, sombra em camadas e um brilho que segue o mouse (--mx/--my vêm do GSAP).
    O transform (tilt 3D) é do GSAP, por isso nenhum card tem transition de transform. */
 .service-card,
+.fisio-card,
 .sport-card,
 .trust-card,
 .team-support-card,
@@ -1309,6 +1164,7 @@ select:focus-visible {
   transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 .service-card::after,
+.fisio-card::after,
 .sport-card::after,
 .trust-card::after,
 .team-support-card::after,
@@ -1324,6 +1180,7 @@ select:focus-visible {
   transition: opacity 0.3s ease;
 }
 .service-card:hover::after,
+.fisio-card:hover::after,
 .sport-card:hover::after,
 .trust-card:hover::after,
 .team-support-card:hover::after,
@@ -1332,6 +1189,7 @@ select:focus-visible {
   opacity: 1;
 }
 .service-card:hover,
+.fisio-card:hover,
 .sport-card:hover,
 .trust-card:hover,
 .team-support-card:hover,
@@ -1529,48 +1387,4 @@ section[id] {
   .nav-camadas {
     display: none;
   }
-}
-
-/* Instagram com o degradê oficial: o disco do ícone fica branco para o degradê aparecer em qualquer marca */
-.footer-social-icon {
-  background-color: #fff;
-}
-
-/* Logos das duas marcas no rodapé: mesmo alinhamento do cabeçalho da home.
-   O arquivo da One To One inclui a palavra "STUDIO"; descer 8,7% centraliza o nome principal com o da PKZ. */
-.footer-par {
-  display: flex;
-  align-items: center;
-  gap: 0.9rem;
-}
-.footer-par img {
-  display: block;
-  width: auto;
-}
-.footer-par img:first-child {
-  height: 2.2rem;
-}
-.footer-par img:last-child {
-  height: 2.85rem;
-  transform: translateY(8.7%);
-}
-.footer-par-amp {
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-size: 1.4rem;
-  color: var(--accent-ink); /* azul vivo da marca */
-}
-/* Nav: logo da outra marca no lugar do texto */
-.cross-brand-nav-link img {
-  display: block;
-  height: 1.5rem;
-  width: auto;
-}
-/* One To One é clara: a logo branca da PKZ vira escura */
-[data-brand="oto"] .footer-par img:first-child,
-[data-brand="oto"] .cross-brand-nav-link img {
-  filter: brightness(0);
-}
-[data-brand="pkz"] .cross-brand-nav-link img {
-  height: 1.7rem;
 }

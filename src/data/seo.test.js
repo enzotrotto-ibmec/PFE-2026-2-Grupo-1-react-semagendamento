@@ -26,16 +26,16 @@ test("a página 404 não é indexada", () => {
   assert.match(montarHead("404", SITE), /name="robots" content="noindex"/);
 });
 
-test("a home descreve as duas marcas no mesmo endereço (@graph), cada uma com a sua página", () => {
+test("a home descreve as três marcas no mesmo endereço (@graph), cada uma com a sua página", () => {
   const json = montarHead("/", SITE).match(/ld\+json">(.*)<\/script>/)[1];
   const grafo = JSON.parse(json)["@graph"];
-  assert.deepEqual(grafo.map((n) => n.name), ["PKZ Lab", "Studio One To One"]);
-  assert.match(grafo[1].url, /\/repo\/one-to-one\/$/);
+  assert.deepEqual(grafo.map((n) => n.name), ["PKZ Lab", "Studio One To One", "Fisioterapia"]);
+  assert.match(grafo[2].url, /\/repo\/fisioterapia\/$/);
   assert.equal(new Set(grafo.map((n) => n.address.streetAddress)).size, 1);
 });
 
 test("só as páginas das marcas e a home levam JSON-LD, sem '<' solto dentro do script", () => {
-  assert.match(montarHead("/pkz", SITE), /"@type":"SportsActivityLocation"/);
+  assert.match(montarHead("/fisioterapia", SITE), /"@type":"Physiotherapy"/);
   assert.doesNotMatch(montarHead("/privacidade", SITE), /ld\+json/);
   for (const rota of Object.keys(ROTAS)) {
     const json = montarHead(rota, SITE).match(/ld\+json">(.*)<\/script>/)?.[1];

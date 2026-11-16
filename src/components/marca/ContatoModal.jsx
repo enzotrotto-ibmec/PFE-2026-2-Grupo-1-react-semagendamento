@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { abrirComoModal } from "../../utils/dialogo.js";
-import { linkWhatsapp } from "../../utils/agendamento.js";
+import { linkWhatsapp } from "../../utils/whatsapp.js";
 
 // Janela "Fale Conosco": a pessoa digita o nome e abrimos o WhatsApp com a mensagem pronta.
 //
