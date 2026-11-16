@@ -102,7 +102,7 @@ export default function AgendamentoModal({ marca, horario, onFechar }) {
       onClose={fechar}
       onClick={(e) => e.target === e.currentTarget && fechar()}
     >
-      <div className="modal-box">
+      <div className="modal-box" data-lenis-prevent>
         <button type="button" className="modal-close" aria-label="Fechar janela" onClick={fechar}>
           &times;
         </button>

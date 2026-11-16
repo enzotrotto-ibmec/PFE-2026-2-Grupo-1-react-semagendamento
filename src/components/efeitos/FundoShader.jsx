@@ -64,7 +64,7 @@ function paraRgb(valor) {
 }
 
 // Variáveis de cor do tema usadas como padrão. A marca pode definir --shader-a, --shader-b e
-// --shader-mix para uma paleta própria do efeito (ver pkz.css, one-to-one.css e fisio.css).
+// --shader-mix para uma paleta própria do efeito (ver pkz.css e one-to-one.css).
 const COR_FUNDO = "--bg-base";
 const COR_A = "--accent-strong";
 const COR_B = "--accent-ink";

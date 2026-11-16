@@ -13,7 +13,7 @@ com menu hambúrguer. O que muda é a forma de construir: o site virou uma SPA (
 * React 19 (componentes, props e `useState`)
 * React Router (`BrowserRouter`, `Routes`, `Route` e `Link`)
 * Vite (servidor de desenvolvimento e build)
-* GSAP + ScrollTrigger (animações presas à rolagem) e um shader WebGL no fundo do hero
+* GSAP + ScrollTrigger (animações presas à rolagem), Lenis (rolagem suave) e um shader WebGL no fundo do hero
 * CSS3 (as mesmas folhas de estilo do Vanilla)
 
 ## Requisitos da AP2 (e-mail do professor) e onde estão
@@ -26,19 +26,18 @@ com menu hambúrguer. O que muda é a forma de construir: o site virou uma SPA (
 | `useState` | Menu hambúrguer, janelas de contato e agendamento, formulário, mapa, halter do portal |
 | Navegação com `BrowserRouter` | `src/main.jsx` (BrowserRouter) e `src/App.jsx` (Routes/Route) |
 | Sem `<a>` para navegação interna | Toda troca de página usa `<Link>` (via `LinkInterno`); `<a>` só para links externos (WhatsApp, Instagram, Google Maps) e para o atalho de acessibilidade "Pular para o conteúdo" (`href="#main"`, que não troca de página) |
-| Sem `useEffect` (só na próxima aula) | Os componentes de dados e de página não usam. **Exceção assumida pelo grupo:** os efeitos visuais (`utils/animacoes.js`, `components/efeitos/FundoShader.jsx` e `components/TransicaoPagina.jsx`) usam `useLayoutEffect`/`useEffect`, porque GSAP e WebGL precisam do DOM já montado |
+| Sem `useEffect` (só na próxima aula) | Os componentes de dados e de página não usam. **Exceção assumida pelo grupo:** os efeitos visuais (`utils/animacoes.js`, `utils/rolagem.js`, `components/efeitos/FundoShader.jsx` e `components/TransicaoPagina.jsx`) usam `useLayoutEffect`/`useEffect`, porque GSAP e WebGL precisam do DOM já montado |
 
 ## Rotas
 
 | Vanilla | React (rota) | Componente |
 | --- | --- | --- |
-| `index.html` | `/` | `pages/Home.jsx` (ecossistema: CTAs para PKZ, One To One e Fisioterapia; substituiu o portal do halter, que foi removido e continua no histórico do Git) |
+| `index.html` | `/` | `pages/Home.jsx` (ecossistema: CTAs para PKZ e One To One; substituiu o portal do halter, que foi removido e continua no histórico do Git) |
 | `pages/pkz.html` | `/pkz` | `pages/PaginaPkz.jsx` |
 | `pages/pkz-aula-experimental.html` | `/pkz/aula-experimental` | `pages/AulaExperimental.jsx` (`marca="pkz"`) |
 | `pages/one-to-one.html` | `/one-to-one` | `pages/PaginaOneToOne.jsx` |
 | `pages/one-to-one-aula-experimental.html` | `/one-to-one/aula-experimental` | `pages/AulaExperimental.jsx` (`marca="oto"`) |
 | `pages/privacidade.html` | `/privacidade` | `pages/Privacidade.jsx` |
-| (novo) | `/fisioterapia` | `pages/PaginaFisio.jsx` (marca independente, sem aula experimental) |
 | `404.html` | qualquer outra (`*`) | `pages/NaoEncontrada.jsx` |
 
 ## Estrutura
@@ -176,13 +175,22 @@ npm test
 
 Roda `src/data/seo.test.js` (Node, sem dependências): confere o `<head>` gerado por rota (canonical, `noindex` da 404, JSON-LD, tamanho das descrições).
 
+## Rolagem suave e componentes animados
+
+* **Lenis 1.3.27** (MIT, darkroom.engineering): rolagem suave do site inteiro, ligada ao relógio do GSAP em `src/utils/rolagem.js` (sem isso o ScrollTrigger sai de sincronia). Se a Lenis falhar ao iniciar, o site rola do jeito nativo. As janelas (`<dialog>`) param a Lenis enquanto estão abertas e têm `data-lenis-prevent`.
+* **React Bits** (reactbits.dev, de David Haz; licença MIT + Commons Clause: pode usar no site, não pode revender os componentes): usamos só as ideias, em versões enxutas escritas por nós, sem instalar o pacote:
+  * faixa de logos em loop na home e faixa de esportes da PKZ que acelera com a rolagem (`components/efeitos/FaixaRolante.jsx`, `useFaixaPorVelocidade` em `utils/animacoes.js`; ideias do LogoLoop e do ScrollVelocity);
+  * borda que brilha seguindo o mouse nos cartões da home (BorderGlow) e botão "Agendar aula" com luz correndo pela borda (StarBorder): só CSS;
+  * menu do celular em tela cheia, com camadas e links entrando em sequência (`useMenuEscalonado`; ideia do StaggeredMenu).
+* GSAP continua em 3.15.1. As animações não respeitam `prefers-reduced-motion`, por decisão do grupo.
+
 ## Imagens
 
 As fotos em `public/assets/img/` existem em quatro larguras (480, 800, 1280 e 1920 px; `srcsetDe` em `src/utils/asset.js` monta o `srcset`). As de `img/portal/` só servem de imagem de compartilhamento (og:image) e existem só em 1280 px.
 
 ## SEO, segurança e publicação
 
-No `npm run build` o `vite.config.js` gera um `index.html` por rota (`dist/pkz/`, `dist/fisioterapia/`...) com título, descrição, Open Graph e dados estruturados da página (fonte única: `src/data/seo.js`), mais `robots.txt`, `404.html` (noindex) e a política de conteúdo (CSP) em `<meta>`.
+No `npm run build` o `vite.config.js` gera um `index.html` por rota (`dist/pkz/`, `dist/one-to-one/`...) com título, descrição, Open Graph e dados estruturados da página (fonte única: `src/data/seo.js`), mais `robots.txt`, `404.html` (noindex) e a política de conteúdo (CSP) em `<meta>`.
 
 Para gerar também `sitemap.xml`, canonical e `og:image` (precisam do endereço público), defina o endereço antes do build:
 

@@ -2,6 +2,8 @@ import { useLayoutEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+import { lenis } from "./rolagem.js";
+
 gsap.registerPlugin(ScrollTrigger);
 
 // Movimento das páginas de marca. O site "vai aparecendo" conforme você desce (e se desfaz ao
@@ -10,9 +12,9 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Blocos de uma seção: desce pelos wrappers de filho único e abre as grades,
 // para cada card/destaque/linha animar sozinho.
-const GRADES = ".card-grid, .about-highlights, .fisio-etapas, .cta-band, .numeros-grid";
+const GRADES = ".card-grid, .about-highlights, .cta-band, .numeros-grid";
 // Estes têm movimento próprio (seção travada + acende em sequência): ficam fora da entrada genérica
-const PROPRIOS = ".about-lead, .highlight-item, .fisio-etapas";
+const PROPRIOS = ".about-lead, .highlight-item";
 function blocosDe(secao) {
   let filhos = [...secao.children];
   while (filhos.length === 1 && filhos[0].children.length) filhos = [...filhos[0].children];
@@ -45,14 +47,6 @@ function dividirPalavras(el) {
   return { palavras, reverter: () => (el.innerHTML = original) };
 }
 
-// Altura do bloco sem o espaço que o pin acrescenta (um filho travado vira .pin-spacer, bem mais alto).
-// Duas colunas (grade com mais de uma coluna): vale a maior; uma coluna: a soma.
-function alturaNatural(bloco) {
-  const alturas = [...bloco.children].map((c) => (c.classList.contains("pin-spacer") ? c.firstElementChild : c).offsetHeight);
-  const colunas = getComputedStyle(bloco).gridTemplateColumns.split(" ").filter(Boolean).length;
-  return colunas > 1 ? Math.max(...alturas) : alturas.reduce((a, b) => a + b, 0);
-}
-
 // Trava a seção no meio da tela e roda a linha do tempo conforme a rolagem (a página só volta a descer
 // quando termina; rolar para cima desfaz). Se a seção for mais alta que a tela não dá para travar:
 // nesse caso a mesma sequência acompanha a rolagem sem pin.
@@ -73,9 +67,79 @@ function travarEAcender(alvo, montar) {
   });
 }
 
+// Faixa que anda sozinha e acelera com a velocidade da rolagem (inspirada no ScrollVelocity da React Bits,
+// refeita com o GSAP que já usamos em vez da biblioteca Motion). Rolar para cima inverte a direção.
+// Só roda enquanto a faixa está na tela. Props do CSS: ver .faixa-por-rolagem em styles/global.css.
+export function useFaixaPorVelocidade(faixaRef, velocidadeBase = 50) {
+  useLayoutEffect(() => {
+    const faixa = faixaRef.current;
+    const trilho = faixa?.querySelector(".faixa-trilho");
+    if (!trilho) return;
+
+    let visivel = false;
+    let deslocamento = 0; // px já andados dentro de uma volta
+    let velocidade = velocidadeBase; // px/s, com sinal (negativo = para a direita)
+    let direcao = 1;
+
+    const gatilho = ScrollTrigger.create({
+      trigger: faixa, start: "top bottom", end: "bottom top",
+      onToggle: (self) => (visivel = self.isActive),
+    });
+    const passo = (_tempo, dt) => {
+      if (!visivel) return;
+      const v = gatilho.getVelocity(); // px/s da rolagem da página
+      if (Math.abs(v) > 20) direcao = v < 0 ? -1 : 1;
+      const alvo = direcao * velocidadeBase * (1 + Math.min(Math.abs(v) / 150, 8));
+      velocidade += (alvo - velocidade) * Math.min(1, dt / 180); // aceleração suave
+      const volta = trilho.scrollWidth / 2;
+      if (!volta) return;
+      deslocamento = (((deslocamento + (velocidade * dt) / 1000) % volta) + volta) % volta;
+      trilho.style.transform = `translate3d(${-deslocamento}px, 0, 0)`;
+    };
+    gsap.ticker.add(passo);
+
+    return () => {
+      gsap.ticker.remove(passo);
+      gatilho.kill();
+      trilho.style.transform = "";
+    };
+  }, [faixaRef, velocidadeBase]);
+}
+
+// Menu do celular em tela cheia (inspirado no StaggeredMenu da React Bits): enquanto está aberto, as camadas de cor
+// entram uma depois da outra e os links sobem em sequência. Só no celular; no desktop o menu é a linha de links.
+// Com o menu aberto o resto da página fica inerte (teclado e leitor de tela ficam no cabeçalho e no menu) e a
+// rolagem da página para. Se a tela virar desktop com o menu aberto, ele fecha (aoFechar).
+export function useMenuEscalonado(aberto, areaRef, aoFechar) {
+  useLayoutEffect(() => {
+    const area = areaRef.current;
+    const desktop = window.matchMedia("(min-width: 48.0625em)");
+    if (!aberto || !area || desktop.matches) return;
+
+    const pagina = area.closest(".pagina");
+    const fora = pagina ? [...pagina.children].filter((el) => !el.contains(area)) : [];
+    fora.forEach((el) => (el.inert = true));
+    lenis?.stop();
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(".nav-camada", { xPercent: -101 }, { xPercent: 0, duration: 0.55, ease: "power3.out", stagger: 0.12 });
+      gsap.fromTo(".nav-links > li", { y: 40, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: "power3.out", stagger: 0.07, delay: 0.3 });
+    }, area);
+
+    const mudou = () => desktop.matches && aoFechar();
+    desktop.addEventListener("change", mudou);
+    return () => {
+      desktop.removeEventListener("change", mudou);
+      ctx.revert();
+      fora.forEach((el) => (el.inert = false));
+      lenis?.start();
+    };
+  }, [aberto, areaRef, aoFechar]);
+}
+
 // Cards com profundidade (tilt 3D + brilho que segue o mouse) e botões "magnéticos".
 // Só em dispositivos com mouse; o toque não tem hover.
-const CARTOES = ".eco-card, .service-card, .fisio-card, .cross-brand-card, .sport-card, .team-support-card, .trust-card, .numero-card";
+const CARTOES = ".eco-card, .service-card, .cross-brand-card, .sport-card, .team-support-card, .trust-card, .numero-card";
 function ligarInteracoes(raiz) {
   if (!window.matchMedia("(hover: hover) and (pointer: fine)").matches) return () => {};
 
@@ -172,7 +236,7 @@ export function useAnimacoesScroll(raizRef) {
       });
 
       // imagens: "zoom out" suave enquanto o card atravessa a tela
-      gsap.utils.toArray(".service-img-wrapper img, .fisio-etapas-img img, .about-container img").forEach((img) => {
+      gsap.utils.toArray(".service-img-wrapper img, .about-container img").forEach((img) => {
         gsap.fromTo(img, { scale: 1.25 }, {
           scale: 1, ease: "none",
           scrollTrigger: { trigger: img, start: "top bottom", end: "bottom 45%", scrub: 0.8 },
@@ -181,7 +245,7 @@ export function useAnimacoesScroll(raizRef) {
 
     }, raiz);
 
-    // Sobre e etapas da Fisioterapia: seção travada + acende em sequência. Ficam num contexto próprio porque
+    // Seção "Sobre": travada + acende em sequência. Ficam num contexto próprio porque
     // "trava ou não" depende do tamanho da tela e é refeito se ele mudar (zoom, girar o celular, imagens que carregam).
     // Travar uma seção mais alta que a tela cortaria o conteúdo, então nesse caso não há pin.
     const sequencias = [];
@@ -198,25 +262,6 @@ export function useAnimacoesScroll(raizRef) {
           tl.fromTo(palavras, { opacity: 0.2 }, { opacity: 1, duration: 0.3, stagger: 0.15 })
             .fromTo(itens, { opacity: 0.2, y: 24 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.4 }, ">-0.2")
             .to({}, { duration: 0.4 });
-        },
-      });
-    });
-    gsap.utils.toArray(".fisio-etapas").forEach((bloco) => {
-      const etapas = gsap.utils.toArray(".fisio-lista li", bloco);
-      const fill = bloco.querySelector(".fisio-linha-fill");
-      if (!etapas.length) return;
-      sequencias.push({
-        // se o bloco inteiro não cabe na tela (celular), trava só a coluna das etapas
-        alvo: () => (alturaNatural(bloco) <= window.innerHeight * 0.95 ? bloco : bloco.querySelector(".fisio-etapas-texto") || bloco),
-        montar: (tl) => {
-          // Fisioterapia: as etapas acendem uma a uma, com a linha se enchendo junto
-          etapas.forEach((li, i) => {
-            const num = li.querySelector(".fisio-num");
-            tl.fromTo(li, { opacity: 0.25 }, { opacity: 1, duration: 0.5 }, i);
-            if (num) tl.fromTo(num, { scale: 0.8 }, { scale: 1, duration: 0.5 }, i);
-          });
-          if (fill) tl.fromTo(fill, { scaleY: 0 }, { scaleY: 1, transformOrigin: "top", duration: etapas.length - 0.5 }, 0);
-          tl.to({}, { duration: 0.5 });
         },
       });
     });

@@ -14,7 +14,7 @@
   --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; font-size: clamp(1rem, 0.435rem + 0.8222vw, 1.75rem); }
+html { font-size: clamp(1rem, 0.435rem + 0.8222vw, 1.75rem); }
 body { overflow-wrap: anywhere; background: var(--bg-base); color: var(--text-primary); font-family: var(--font); font-size: 1rem; line-height: 1.7; min-height: 100vh; display: flex; flex-direction: column; }
 a { color: var(--accent-ink); text-underline-offset: 3px; }
 a:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 2px; }

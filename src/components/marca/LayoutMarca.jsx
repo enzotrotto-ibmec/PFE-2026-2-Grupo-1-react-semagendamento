@@ -12,7 +12,6 @@ import { MARCAS } from "../../data/marcas.js";
 import baseCss from "../../styles/base.css?inline";
 import pkzCss from "../../styles/pkz.css?inline";
 import otoCss from "../../styles/one-to-one.css?inline";
-import fisioCss from "../../styles/fisio.css?inline";
 import ctaCss from "../../styles/cta.css?inline";
 import extrasCss from "../../styles/extras.css?inline";
 
@@ -34,7 +33,7 @@ export default function LayoutMarca({ marcaId, titulo, paginaInicial = false, ch
   useAnimacoesScroll(raizRef);
 
   // mesma ordem de CSS do vanilla; a aula experimental não carregava o cta.css
-  const temaCss = { pkz: pkzCss, oto: otoCss, fisio: fisioCss }[marcaId];
+  const temaCss = { pkz: pkzCss, oto: otoCss }[marcaId];
   const folhas = paginaInicial ? [baseCss, temaCss, ctaCss, extrasCss] : [baseCss, temaCss, extrasCss];
 
   return (

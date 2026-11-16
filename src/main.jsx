@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
 import App from "./App.jsx";
 import "./styles/global.css";
+import "./utils/rolagem.js"; // rolagem suave (Lenis) ligada ao GSAP
 
 // O BrowserRouter fica em volta de todo o app para que <Link>, <Routes> e <Route>
 // funcionem em qualquer componente.

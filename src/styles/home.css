@@ -1,10 +1,7 @@
 /* Página inicial (ecossistema). Vem DEPOIS do portal.css: reaproveita os tokens e o rodapé dele,
-   desliga a barra fixa do halter e define o resto. Cores e fontes são as das três marcas. */
+   desliga a barra fixa do halter e define o resto. Cores e fontes são as das duas marcas. */
 :root {
   --home-pad: clamp(1.2rem, 5vw, 4rem);
-}
-html {
-  scroll-behavior: smooth;
 }
 body {
   padding-top: 0;
@@ -24,13 +21,6 @@ body {
 [data-marca="oto"] {
   --mc: #014c6f;
   --mi: #00bbff;
-  --mf: "Plus Jakarta Sans", sans-serif;
-  --mp: 800;
-  --ms: normal;
-}
-[data-marca="fisio"] {
-  --mc: #0f5f58;
-  --mi: #2dd4bf;
   --mf: "Plus Jakarta Sans", sans-serif;
   --mp: 800;
   --ms: normal;
@@ -56,7 +46,7 @@ body {
   inset: 0 0 auto 0;
   height: 3px;
   z-index: 400;
-  background: linear-gradient(90deg, #93c5fd, #00bbff, #2dd4bf);
+  background: linear-gradient(90deg, #93c5fd, #00bbff);
   transform: scaleX(0);
   transform-origin: left;
   pointer-events: none;
@@ -81,16 +71,30 @@ body {
 .home-marca {
   display: inline-flex;
   align-items: center;
+  gap: 0.7rem;
   min-height: 2.75rem;
   margin-right: auto;
-  font-family: var(--font-display);
-  font-weight: 900;
-  font-style: italic;
-  font-size: 1.35rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
   color: #ffffff;
   text-decoration: none;
+}
+.home-marca img {
+  display: block;
+  width: auto;
+}
+.home-marca img:first-child {
+  height: 1.7rem;
+}
+.home-marca img:last-child {
+  height: 2.2rem; /* a logo da One To One tem traço fino e texto pequeno: precisa de mais altura para ler */
+  /* O arquivo da One To One inclui a palavra "STUDIO" embaixo, então o centro do desenho principal fica a 41,3% da
+     altura (medido no SVG) e não a 50%. Descer 8,7% da própria altura alinha esse centro com o da logo da PKZ. */
+  transform: translateY(8.7%);
+}
+.home-marca-amp {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.1rem;
+  opacity: 0.7;
 }
 .home-nav {
   display: flex;
@@ -130,9 +134,6 @@ body {
 .n-oto {
   --c: #00bbff;
 }
-.n-fisio {
-  --c: #2dd4bf;
-}
 .home-nav-link:hover {
   background: var(--c);
   color: #04121f;
@@ -144,13 +145,14 @@ body {
   outline-offset: 3px;
 }
 
-/* ---------- Hero: as três equipes lado a lado ---------- */
+/* ---------- Hero: as duas equipes lado a lado ---------- */
 .home-hero {
   position: relative;
   min-height: 100svh;
   display: grid;
   align-items: end;
-  padding: 8rem var(--home-pad) clamp(2.5rem, 8vh, 5rem);
+  /* o espaço de cima e de baixo acompanha a ALTURA da janela: em telas baixas o botão não sai da primeira tela */
+  padding: clamp(5.5rem, 14vh, 8rem) var(--home-pad) clamp(2rem, 6vh, 4rem);
   overflow: hidden;
   isolation: isolate;
 }
@@ -159,12 +161,12 @@ body {
   inset: 0;
   z-index: -3;
   display: grid;
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
 }
 @media (min-width: 48em) {
   .tri {
     grid-template-rows: none;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 .tri-faixa {
@@ -225,7 +227,7 @@ body {
   mix-blend-mode: soft-light;
   background:
     radial-gradient(55% 50% at 20% 30%, #1e40af, transparent 70%),
-    radial-gradient(45% 55% at 50% 80%, #2dd4bf, transparent 70%),
+    radial-gradient(45% 55% at 50% 80%, #3b82f6, transparent 70%),
     radial-gradient(50% 60% at 85% 30%, #00bbff, transparent 70%);
   animation: flutua 14s ease-in-out infinite alternate;
 }
@@ -244,7 +246,8 @@ body {
   font-family: var(--font-display);
   font-weight: 900;
   font-style: italic;
-  font-size: clamp(2.8rem, 9vw, 8.5rem);
+  /* limitado também pela altura (17vh): em janela larga e baixa o título não empurra o botão para fora da tela */
+  font-size: clamp(2.6rem, min(9vw, 17vh), 8.5rem);
   line-height: 0.95;
   letter-spacing: -0.01em;
   max-width: 15ch;
@@ -261,7 +264,7 @@ body {
   display: inline-block;
 }
 .hero-texto p {
-  margin: 1.2rem 0 1.8rem;
+  margin: clamp(0.7rem, 2vh, 1.2rem) 0 clamp(1rem, 3vh, 1.8rem);
   max-width: 36ch;
   font-size: clamp(1.05rem, 2vw, 1.5rem);
   color: #e2e8f0;
@@ -313,7 +316,7 @@ body {
   letter-spacing: -0.005em;
 }
 
-/* ---------- Ecossistema: três cartões ligados por um fio ---------- */
+/* ---------- Ecossistema: dois cartões ligados por um fio ---------- */
 .eco {
   padding: clamp(3rem, 8vh, 6rem) var(--home-pad) clamp(4rem, 10vh, 7rem);
   background: linear-gradient(180deg, var(--bg-base), #051a30 60%, var(--bg-deep));
@@ -338,7 +341,7 @@ body {
 }
 @media (min-width: 60em) {
   .eco-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     padding-top: 2.5rem;
   }
 }
@@ -357,11 +360,11 @@ body {
   }
   .fio-linha {
     position: absolute;
-    left: 16.6%;
-    right: 16.6%;
+    left: 25%;
+    right: 25%;
     top: 50%;
     height: 2px;
-    background: linear-gradient(90deg, #93c5fd, #00bbff, #2dd4bf);
+    background: linear-gradient(90deg, #93c5fd, #00bbff);
     transform-origin: left;
   }
   .fio-no {
@@ -482,4 +485,57 @@ body {
   font-size: var(--fs-md);
   color: var(--text-muted);
   line-height: 1.5;
+}
+
+/* ---------- Faixa de logos (components/efeitos/FaixaRolante.jsx) ---------- */
+.faixa-marcas {
+  padding: 1.5rem 0;
+  background: var(--bg-base);
+  border-block: 1px solid rgba(255, 255, 255, 0.08);
+}
+.faixa-marca {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding-inline: 1.4rem;
+}
+.faixa-marca::after {
+  content: "✦";
+  margin-left: 1.4rem;
+  color: rgba(255, 255, 255, 0.3);
+}
+.faixa-marca img {
+  height: 2rem;
+  width: auto;
+}
+.faixa-marca span {
+  font-family: var(--mf);
+  font-weight: var(--mp);
+  font-style: var(--ms);
+  font-size: 0.95rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mi);
+}
+
+/* ---------- Borda que brilha seguindo o mouse nos cartões (inspirado no BorderGlow da React Bits) ----------
+   --mx e --my são escritos por ligarInteracoes (utils/animacoes.js) junto com o tilt; só em telas com mouse. */
+.eco-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  padding: 2px;
+  border-radius: inherit;
+  background: radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), var(--mi), transparent 70%);
+  /* o furo no meio deixa só o anel de 2px */
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+.eco-card:hover::after {
+  opacity: 1;
 }

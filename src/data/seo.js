@@ -14,11 +14,11 @@ const NOME_SITE = "PKZ Lab & Studio One To One";
 
 export const ROTAS = {
   "/": {
-    titulo: "PKZ Lab, One To One e Fisioterapia | Barra da Tijuca, RJ",
+    titulo: "PKZ Lab e One To One | Barra da Tijuca, RJ",
     descricao:
-      "PKZ Lab (treino de alto rendimento), Studio One To One (personal training e nutrição) e Fisioterapia no mesmo endereço, na Barra da Tijuca, Rio de Janeiro.",
+      "PKZ Lab (treino de alto rendimento) e Studio One To One (personal training e nutrição) no mesmo endereço, na Barra da Tijuca, Rio de Janeiro.",
     imagem: "img/portal/LandingPKZ-1280.webp",
-    marcas: ["pkz", "oto", "fisio"], // dados estruturados das três, no mesmo endereço
+    marcas: ["pkz", "oto"], // dados estruturados das duas, no mesmo endereço
   },
   "/pkz": {
     titulo: "PKZ Lab | Treino de alto rendimento na Barra da Tijuca",
@@ -46,13 +46,6 @@ export const ROTAS = {
       "Escolha o dia e o horário da sua aula experimental no Studio One To One, na Barra da Tijuca, e envie o pedido pelo WhatsApp.",
     imagem: "img/portal/LandingOneToOne-1280.webp",
   },
-  "/fisioterapia": {
-    titulo: "Fisioterapia | Reabilitação e movimento na Barra da Tijuca",
-    descricao:
-      "Fisioterapia na Barra da Tijuca: reabilitação ortopédica, pós-operatório, prevenção de lesões e pilates clínico com atendimento individual. Agende no WhatsApp.",
-    imagem: "img/fisio/equipe-1280.webp",
-    marca: "fisio",
-  },
   "/privacidade": {
     titulo: "Política de Privacidade | PKZ Lab e Studio One To One",
     descricao:
@@ -74,7 +67,7 @@ const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/"/g, "&quot;").repl
 function dadosDaMarca(id, urlDe, imagemDe) {
   const marca = MARCAS[id];
   const dados = {
-    "@type": id === "fisio" ? "Physiotherapy" : "SportsActivityLocation",
+    "@type": "SportsActivityLocation",
     name: marca.nome,
     description: ROTAS[marca.rota].descricao,
     address: {
@@ -92,7 +85,7 @@ function dadosDaMarca(id, urlDe, imagemDe) {
   return dados;
 }
 
-// Página de uma marca: um negócio. Home (campo "marcas"): as três no mesmo endereço, em @graph.
+// Página de uma marca: um negócio. Home (campo "marcas"): as duas no mesmo endereço, em @graph.
 function schemaDaPagina(pagina, urlDe, imagemDe) {
   const base = { "@context": "https://schema.org" };
   const dados = pagina.marca

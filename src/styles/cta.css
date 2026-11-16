@@ -45,12 +45,6 @@
     #014c6f;
 }
 
-[data-brand="fisio"] {
-  --cta-band-bg:
-    radial-gradient(circle at 100% 0, rgba(45, 212, 191, 0.35), transparent 55%),
-    #0f5f58;
-}
-
 /* ---------- Botões ---------- */
 .cta-btn {
   gap: 0.625rem;
@@ -250,5 +244,37 @@ html {
   }
   html {
     scroll-padding-bottom: 0;
+  }
+}
+
+/* Botão com uma luz que corre pela borda (inspirado no StarBorder da React Bits).
+   Só CSS: o anel é um gradiente cônico que gira com @property; em navegador sem @property fica um anel parado. */
+@property --estrela-angulo {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+.botao-estrela {
+  position: relative;
+}
+.botao-estrela::before {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  padding: 3px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--estrela-angulo), transparent 0 55%, rgba(255, 255, 255, 0.95) 82%, transparent 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: estrela-girar 3.2s linear infinite;
+  pointer-events: none;
+}
+.botao-estrela:hover::before {
+  animation-duration: 1.6s;
+}
+@keyframes estrela-girar {
+  to {
+    --estrela-angulo: 360deg;
   }
 }

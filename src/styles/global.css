@@ -89,3 +89,39 @@
   width: auto;
   opacity: 0;
 }
+
+
+/* ---------- Faixa que rola (components/efeitos/FaixaRolante.jsx) ---------- */
+.faixa {
+  overflow: hidden;
+  /* as bordas somem aos poucos, em vez de cortar o item no meio */
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.faixa-trilho {
+  display: flex;
+  width: max-content;
+  animation: faixa-rolar var(--faixa-duracao, 40s) linear infinite;
+  will-change: transform;
+}
+.faixa-lista {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.faixa:hover .faixa-trilho,
+.faixa:focus-within .faixa-trilho {
+  animation-play-state: paused;
+}
+/* movimento guiado pela rolagem: o JS (useFaixaPorVelocidade) escreve o transform */
+.faixa-por-rolagem .faixa-trilho {
+  animation: none;
+}
+@keyframes faixa-rolar {
+  to {
+    transform: translateX(-50%);
+  }
+}

@@ -2,7 +2,7 @@ import { IconeInstagram } from "../Icones.jsx";
 import { asset } from "../../utils/asset.js";
 import { MARCAS } from "../../data/marcas.js";
 
-// Rodapé do portal: logos das três marcas e cards do Instagram (a Fisioterapia ainda não tem perfil).
+// Rodapé do portal: logos das duas marcas e cards do Instagram.
 export default function RodapePortal() {
   return (
     <footer id="site-footer">
@@ -15,13 +15,8 @@ export default function RodapePortal() {
             </span>
             <span className="visually-hidden"> e </span>
             <img src={asset("img/logos/one-to-one-branco.svg")} alt="Studio One To One" width="140" height="47" loading="lazy" />
-            <span className="footer-amp" aria-hidden="true">
-              &amp;
-            </span>
-            <span className="visually-hidden"> e </span>
-            <img src={asset("img/logos/fisio-provisorio-branco.svg")} alt="Fisioterapia" width="260" height="60" loading="lazy" />
           </span>
-          <p>Três estruturas parceiras, um só padrão de treino, cuidado e performance.</p>
+          <p>Duas estruturas parceiras, um só padrão de treino, cuidado e performance.</p>
         </div>
 
         <div className="footer-social">
@@ -31,7 +26,7 @@ export default function RodapePortal() {
       </div>
 
       <div className="footer-bottom">
-        <span>&copy; 2026 PKZ, Studio One To One e Fisioterapia. Todos os direitos reservados.</span>
+        <span>&copy; 2026 PKZ e Studio One To One. Todos os direitos reservados.</span>
       </div>
     </footer>
   );

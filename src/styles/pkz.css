@@ -357,3 +357,29 @@ select.modal-input option {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
+
+/* Faixa de esportes em movimento (components/efeitos/FaixaRolante.jsx + useFaixaPorVelocidade) */
+.faixa-esportes {
+  margin: 2rem 0 2.5rem;
+}
+.faixa-esportes li {
+  display: flex;
+  align-items: center;
+  padding-inline: 1.25rem;
+  font-family: var(--font-display, inherit);
+  font-weight: 900;
+  font-style: italic;
+  font-size: clamp(2rem, 6vw, 4rem);
+  line-height: 1.1;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--accent-ink);
+}
+.faixa-esportes li::after {
+  content: "✦";
+  margin-left: 2.5rem;
+  -webkit-text-stroke: 0;
+  color: var(--accent-ink);
+  font-size: 0.5em;
+}
