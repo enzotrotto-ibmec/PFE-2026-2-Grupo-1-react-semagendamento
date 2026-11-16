@@ -194,3 +194,9 @@ body {
 /* Ícone do Instagram acompanha o tamanho do cartão */
 .social-icon svg { width: 55%; height: 55%; }
 
+
+/* Instagram com o degradê oficial sobre disco branco */
+.social-pkz .social-icon,
+.social-oto .social-icon {
+  background: #fff;
+}

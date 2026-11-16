@@ -231,3 +231,12 @@ iframe:focus {
 iframe {
   scroll-margin-block: 5rem;
 }
+/* Cores oficiais: WhatsApp verde #25D366 sobre disco branco */
+@media (min-width: 68.8125em) {
+  .wa-fab {
+    background: #fff;
+  }
+  .wa-fab svg {
+    fill: #25d366;
+  }
+}

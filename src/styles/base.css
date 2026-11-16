@@ -1530,3 +1530,8 @@ section[id] {
     display: none;
   }
 }
+
+/* Instagram com o degradê oficial: o disco do ícone fica branco para o degradê aparecer em qualquer marca */
+.footer-social-icon {
+  background-color: #fff;
+}

@@ -278,3 +278,8 @@ html {
     --estrela-angulo: 360deg;
   }
 }
+
+/* Ícone do WhatsApp na cor oficial (#25D366) */
+.cta-icon {
+  fill: #25d366;
+}
