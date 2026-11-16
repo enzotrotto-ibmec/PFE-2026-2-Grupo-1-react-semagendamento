@@ -92,6 +92,11 @@ body {
   height: 1.4em;
   width: auto;
 }
+/* mesmo alinhamento do cabeçalho: OTO maior e 8,7% mais baixa (o arquivo inclui a palavra "STUDIO") */
+.footer-logo img:last-of-type {
+  height: 1.8em;
+  transform: translateY(8.7%);
+}
 
 .footer-amp {
   font-family: var(--font-display);

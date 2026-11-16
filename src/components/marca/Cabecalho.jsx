@@ -41,8 +41,14 @@ export default function Cabecalho({ marca, onAbrirContato, contatoDestacado = fa
             <IconeSetaVoltar />
             <span className="back-text">Início</span>
           </LinkInterno>
-          <LinkInterno to={outra.rota} className="cross-brand-nav-link">
-            {outra.nome} →
+          {/* Só a logo da outra marca; na One To One (fundo claro) o CSS escurece a PKZ, que só existe em branco */}
+          <LinkInterno to={outra.rota} className="cross-brand-nav-link" aria-label={`Ir para ${outra.nome}`}>
+            <img
+              src={asset(outra.id === "oto" ? "img/logos/one-to-one-branco.svg" : "img/logos/pkz-lab-horizontal-branco.svg")}
+              alt=""
+              width={outra.id === "oto" ? 140 : 849}
+              height={outra.id === "oto" ? 47 : 255}
+            />
           </LinkInterno>
         </div>
 

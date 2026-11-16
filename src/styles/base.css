@@ -1535,3 +1535,42 @@ section[id] {
 .footer-social-icon {
   background-color: #fff;
 }
+
+/* Logos das duas marcas no rodapé: mesmo alinhamento do cabeçalho da home.
+   O arquivo da One To One inclui a palavra "STUDIO"; descer 8,7% centraliza o nome principal com o da PKZ. */
+.footer-par {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+.footer-par img {
+  display: block;
+  width: auto;
+}
+.footer-par img:first-child {
+  height: 2.2rem;
+}
+.footer-par img:last-child {
+  height: 2.85rem;
+  transform: translateY(8.7%);
+}
+.footer-par-amp {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: 1.4rem;
+  color: var(--accent-ink); /* azul vivo da marca */
+}
+/* Nav: logo da outra marca no lugar do texto */
+.cross-brand-nav-link img {
+  display: block;
+  height: 1.5rem;
+  width: auto;
+}
+/* One To One é clara: a logo branca da PKZ vira escura */
+[data-brand="oto"] .footer-par img:first-child,
+[data-brand="oto"] .cross-brand-nav-link img {
+  filter: brightness(0);
+}
+[data-brand="pkz"] .cross-brand-nav-link img {
+  height: 1.7rem;
+}

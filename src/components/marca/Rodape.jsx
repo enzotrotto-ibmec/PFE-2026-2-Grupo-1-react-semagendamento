@@ -1,23 +1,28 @@
 import LinkInterno from "../LinkInterno.jsx";
 import { IconeInstagram } from "../Icones.jsx";
 import { asset } from "../../utils/asset.js";
-import { outraMarca } from "../../data/marcas.js";
 
 // Rodapé das páginas das marcas. Props: marca (data/marcas.js)
 export default function Rodape({ marca }) {
   return (
     <footer className="site-footer-page">
       <div className="footer-inner">
+        {/* Só as logos das duas marcas, alinhadas como no cabeçalho da home. A PKZ só existe em branco:
+            na One To One (fundo claro) o CSS a escurece. */}
         <div className="footer-brand">
-          <img
-            className="footer-logo"
-            src={asset(marca.logo.src)}
-            alt={marca.nome}
-            width={marca.logo.largura}
-            height={marca.logo.altura}
-            loading="lazy"
-          />
-          <p>{marca.rodape.frase}</p>
+          <div className="footer-par">
+            <img src={asset("img/logos/pkz-lab-horizontal-branco.svg")} alt="PKZ Lab" width="849" height="255" loading="lazy" />
+            <span className="footer-par-amp" aria-hidden="true">
+              &amp;
+            </span>
+            <img
+              src={asset(marca.id === "oto" ? "img/logos/one-to-one-petroleo.svg" : "img/logos/one-to-one-branco.svg")}
+              alt="Studio One To One"
+              width="140"
+              height="47"
+              loading="lazy"
+            />
+          </div>
         </div>
 
         <div className="footer-contact">
@@ -27,12 +32,6 @@ export default function Rodape({ marca }) {
             {marca.endereco.cidade}
           </p>
         </div>
-
-        {/* Atalho para a outra marca do mesmo endereço */}
-        <nav className="footer-links" aria-label="Outras marcas">
-          <span className="footer-links-titulo">Conheça também</span>
-          <LinkInterno to={outraMarca(marca.id).rota}>{outraMarca(marca.id).nome}</LinkInterno>
-        </nav>
 
         {/* Link externo (Instagram): aqui o <a> continua, porque não é navegação interna */}
         {marca.instagram && (

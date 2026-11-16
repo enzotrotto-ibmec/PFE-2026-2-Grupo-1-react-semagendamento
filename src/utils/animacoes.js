@@ -206,9 +206,9 @@ export function useAnimacoesScroll(raizRef) {
       gsap.to(".hero-image img", { yPercent: 10, scale: 1.1, ease: "none", scrollTrigger: saida });
       gsap.to(".hero-shader", { yPercent: 20, opacity: 0.3, ease: "none", scrollTrigger: saida });
 
-      // todas as outras seções e o rodapé: cada bloco sobe e aparece conforme entra na tela
+      // todas as outras seções: cada bloco sobe e aparece conforme entra na tela.
+      // O rodapé fica de fora: no fim da página ele nunca chega ao ponto de 100% e ficava apagado.
       const secoes = gsap.utils.toArray("main > section").filter((s) => !s.closest(".hero-wrap"));
-      secoes.push(...gsap.utils.toArray(".site-footer-page"));
       secoes.forEach((secao) => {
         blocosDe(secao).forEach((el, i) => {
           // Já está dentro da tela ao abrir: nasce visível. Senão a rolagem ainda não "terminou" de

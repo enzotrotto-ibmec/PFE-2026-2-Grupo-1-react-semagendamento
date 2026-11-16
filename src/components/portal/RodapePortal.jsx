@@ -16,7 +16,6 @@ export default function RodapePortal() {
             <span className="visually-hidden"> e </span>
             <img src={asset("img/logos/one-to-one-branco.svg")} alt="Studio One To One" width="140" height="47" loading="lazy" />
           </span>
-          <p>Duas estruturas parceiras, um só padrão de treino, cuidado e performance.</p>
         </div>
 
         <div className="footer-social">
