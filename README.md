@@ -5,7 +5,7 @@
 Repositório do site da PKZ Lab & Studio One To One refeito em **React**, a partir da versão Vanilla
 (HTML, CSS e JavaScript puro) entregue na AC.
  
-**Esta é a versão sem agendamento publicada via Vercel** - O nome do repositório está sem "fisio" (de fisioterapia), mas foi porque fizemos confusão. Ele contém a parte de fisioterapia, mas está sem a de agendamento!
+**Esta é a versão sem agendamento publicada via Vercel**
  
 * Repositório da versão Vanilla: https://github.com/enzotrotto-ibmec/PFE-2026-2-Grupo-1-vanila
 * Site da versão Vanilla (GitHub Pages): https://enzotrotto-ibmec.github.io/PFE-2026-2-Grupo-1-vanila/
