@@ -1,77 +1,96 @@
 # Projeto para AP2 da disciplina Projeto Front-end
-
-## PKZ Lab & One to One — versão React
-
+ 
+## PKZ Lab & One to One - versão React (sem a seção de agendamento)
+ 
 Repositório do site da PKZ Lab & Studio One To One refeito em **React**, a partir da versão Vanilla
-(HTML, CSS e JavaScript puro) entregue na AC: https://github.com/enzotrotto-ibmec/PFE-2026-2-Grupo-1-vanila
+(HTML, CSS e JavaScript puro) entregue na AC.
+ 
+**Esta é a versão sem agendamento publicada via Vercel** - O nome do repositório está sem "fisio" (de fisioterapia), mas foi porque fizemos confusão. Ele contém a parte de fisioterapia, mas está sem a de agendamento!
+ 
+* Repositório da versão Vanilla: https://github.com/enzotrotto-ibmec/PFE-2026-2-Grupo-1-vanila
+* Site da versão Vanilla (GitHub Pages): https://enzotrotto-ibmec.github.io/PFE-2026-2-Grupo-1-vanila/
 
-O design, os textos, as imagens e o sistema de agendamento são os mesmos do Vanilla, mobile first e
+O design, os textos e as imagens partem do Vanilla, mobile first e
 com menu hambúrguer. O que muda é a forma de construir: o site virou uma SPA (*single page application*).
+Além do que veio do Vanilla, esta versão ganhou uma página inicial do ecossistema, a página da
+Fisioterapia, animações presas à rolagem e transição entre páginas.
+ 
+## Publicação
+ 
+O site é publicado via Vercel.
+ 
+* Link do site publicado: https://pfe-2026-2-grupo-1-react-semagendamento.vercel.app/
 
 ## Tecnologias
-
+ 
 * React 19 (componentes, props e `useState`)
 * React Router (`BrowserRouter`, `Routes`, `Route` e `Link`)
 * Vite (servidor de desenvolvimento e build)
 * GSAP + ScrollTrigger (animações presas à rolagem), Lenis (rolagem suave) e um shader WebGL no fundo do hero
-* CSS3 (as mesmas folhas de estilo do Vanilla)
+* CSS3 (as folhas de estilo do Vanilla, mais `home.css` e `fisio.css`)
+* Vercel (hospedagem)
 
-## Requisitos da AP2 (e-mail do professor) e onde estão
-
+## Requisitos da AP2
+ 
 | Requisito | Como foi feito |
 | --- | --- |
 | Só 1 `index.html`; as "páginas" são componentes | `index.html` na raiz; cada página é um componente em `src/pages/` |
 | Componentes baseados no Vanilla | Cada bloco do Vanilla virou um componente em `src/components/` |
-| Props | Dados da marca (`src/data/marcas.js`) descem por props; o mesmo `Hero`, `Faq`, `Rodape`... serve às duas marcas |
-| `useState` | Menu hambúrguer, janelas de contato e agendamento, formulário, mapa, halter do portal |
+| Props | Dados da marca (`src/data/marcas.js`) descem por props; o mesmo `Hero`, `Faq`, `Rodape`... serve às marcas |
+| `useState` | Menu hambúrguer, janelas de contato, mapa |
 | Navegação com `BrowserRouter` | `src/main.jsx` (BrowserRouter) e `src/App.jsx` (Routes/Route) |
 | Sem `<a>` para navegação interna | Toda troca de página usa `<Link>` (via `LinkInterno`); `<a>` só para links externos (WhatsApp, Instagram, Google Maps) e para o atalho de acessibilidade "Pular para o conteúdo" (`href="#main"`, que não troca de página) |
-| Sem `useEffect` (só na próxima aula) | Os componentes de dados e de página não usam. **Exceção assumida pelo grupo:** os efeitos visuais (`utils/animacoes.js`, `utils/rolagem.js`, `components/efeitos/FundoShader.jsx` e `components/TransicaoPagina.jsx`) usam `useLayoutEffect`/`useEffect`, porque GSAP e WebGL precisam do DOM já montado |
-
+| Sem `useEffect` | Os componentes de dados e de página não usam. **Exceção assumida pelo grupo:** os efeitos visuais (`utils/animacoes.js`, `utils/rolagem.js`, `components/efeitos/FundoShader.jsx` e `components/TransicaoPagina.jsx`) usam `useLayoutEffect`/`useEffect`, porque GSAP, Lenis e WebGL precisam do DOM já montado |
+ 
 ## Rotas
-
+ 
 | Vanilla | React (rota) | Componente |
 | --- | --- | --- |
-| `index.html` | `/` | `pages/Home.jsx` (ecossistema: CTAs para PKZ e One To One; substituiu o portal do halter, que foi removido e continua no histórico do Git) |
+| `index.html` | `/` | `pages/Home.jsx` (ecossistema: CTAs para PKZ, One To One e Fisioterapia; substituiu o portal do halter, que foi removido e continua no histórico do Git) |
 | `pages/pkz.html` | `/pkz` | `pages/PaginaPkz.jsx` |
-| `pages/pkz-aula-experimental.html` | `/pkz/aula-experimental` | `pages/AulaExperimental.jsx` (`marca="pkz"`) |
 | `pages/one-to-one.html` | `/one-to-one` | `pages/PaginaOneToOne.jsx` |
-| `pages/one-to-one-aula-experimental.html` | `/one-to-one/aula-experimental` | `pages/AulaExperimental.jsx` (`marca="oto"`) |
 | `pages/privacidade.html` | `/privacidade` | `pages/Privacidade.jsx` |
+| (novo) | `/fisioterapia` | `pages/PaginaFisio.jsx` (marca independente) |
 | `404.html` | qualquer outra (`*`) | `pages/NaoEncontrada.jsx` |
-
+ 
+As páginas de marca, de privacidade e a 404 são carregadas sob demanda (`lazy` + `Suspense` em `App.jsx`).
+ 
 ## Estrutura
-
+ 
 ```
 .
-├── index.html                      O ÚNICO HTML do projeto (o React desenha tudo dentro de <div id="root">)
-├── vite.config.js                  Configuração do Vite e nome do repositório (base do GitHub Pages)
-├── package.json                    Dependências e scripts (dev, build, preview)
-├── public/assets/                  Imagens, logos e favicon (os mesmos do Vanilla)
-├── .github/workflows/deploy.yml    Publicação automática no GitHub Pages
+├── index.html                      O único HTML do projeto (o React desenha tudo dentro de <div id="root">)
+├── vite.config.js                  Configuração do Vite, base do site e geração do HTML de cada rota no build
+├── package.json                    Dependências e scripts (dev, build, preview, test)
+├── public/assets/                  Imagens (em 4 larguras), logos e favicon
+├── scrum/                          Documentação Scrum: product backlog e as 3 sprints
 └── src/
-    ├── main.jsx                    Ponto de entrada: <BrowserRouter> em volta do <App />
+    ├── main.jsx                    Ponto de entrada: <BrowserRouter> em volta do <App />, liga a rolagem suave
     ├── App.jsx                     <Routes> e <Route>: qual componente aparece em cada endereço
     ├── data/
-    │   └── marcas.js               Dados das marcas: nome, WhatsApp, horários, endereço, textos (era o js/data.js)
+    │   ├── marcas.js               Dados das marcas: nome, WhatsApp, horários, endereço, textos (era o js/data.js)
+    │   ├── seo.js                  Título, descrição e dados estruturados de cada rota (fonte única)
+    │   └── seo.test.js             Testes do <head> gerado por rota
     ├── pages/                      Uma "página" = um componente
-    │   ├── Portal.jsx
+    │   ├── Home.jsx
     │   ├── PaginaPkz.jsx
     │   ├── PaginaOneToOne.jsx
-    │   ├── AulaExperimental.jsx
+    │   ├── PaginaFisio.jsx
     │   ├── Privacidade.jsx
     │   └── NaoEncontrada.jsx
     ├── components/
     │   ├── LinkInterno.jsx         <Link> do React Router que também rola a tela (topo ou seção)
     │   ├── EstilosDaPagina.jsx     Aplica o CSS de cada página só enquanto ela está na tela (ver abaixo)
+    │   ├── TransicaoPagina.jsx     Cortina animada na troca de página (GSAP)
     │   ├── Icones.jsx              Ícones SVG reutilizados
-    │   ├── marca/                  Blocos comuns às duas marcas
+    │   ├── marca/                  Blocos comuns às marcas
     │   │   ├── LayoutMarca.jsx     Moldura: cabeçalho + <main> + rodapé + janela de contato + atalhos
-    │   │   ├── Cabecalho.jsx       Menu hambúrguer (useState)
+    │   │   ├── Cabecalho.jsx       Menu hambúrguer em tela cheia (useState)
     │   │   ├── Rodape.jsx
     │   │   ├── ContatoModal.jsx    Janela "Fale Conosco" (useState + <dialog>)
     │   │   ├── Hero.jsx
     │   │   ├── Sobre.jsx
+    │   │   ├── FaixaNumeros.jsx
     │   │   ├── Faq.jsx
     │   │   ├── FaixaCta.jsx
     │   │   ├── Localizacao.jsx     Mapa que só carrega no clique (useState)
@@ -84,49 +103,62 @@ com menu hambúrguer. O que muda é a forma de construir: o site virou uma SPA (
     │   │   └── SecaoEsportes.jsx
     │   ├── one-to-one/             Seções só da One To One
     │   │   └── SecaoServicos.jsx
-    │   ├── agendamento/            Sistema de agendamento (lógica do professor, agora com estado)
-    │   │   ├── Agenda.jsx          Botões de dia e horários
-    │   │   └── AgendamentoModal.jsx Formulário com validação e envio pelo WhatsApp
-    │   └── portal/                 Portal com o halter arrastável
-    │       ├── BarraHalter.jsx
-    │       ├── DesenhoHalter.jsx
-    │       ├── Apresentacao.jsx
-    │       ├── PainelMarca.jsx
-    │       ├── SetasDaBorda.jsx
-    │       ├── AvisoRedirecionamento.jsx
-    │       ├── RodapePortal.jsx
-    │       └── constantes.js
+    │   ├── fisio/                  Seções só da Fisioterapia
+    │   │   └── SecaoTratamentos.jsx
+    │   ├── efeitos/                Efeitos visuais
+    │   │   ├── FundoShader.jsx     Fundo do hero em WebGL
+    │   │   └── FaixaRolante.jsx    Faixas em loop (logos e esportes)
+    │   └── portal/
+    │       └── RodapePortal.jsx    Rodapé da página inicial
     ├── utils/
-    │   ├── agendamento.js          Validação de CPF, máscaras e link do WhatsApp
-    │   ├── asset.js                Caminho das imagens (considera o nome do repositório)
+    │   ├── animacoes.js            Animações GSAP/ScrollTrigger (hooks das páginas, faixas e menu)
+    │   ├── rolagem.js              Rolagem suave (Lenis) ligada ao GSAP
+    │   ├── whatsapp.js             Link do WhatsApp (wa.me) com a mensagem pronta
+    │   ├── whatsapp.test.js        Teste do link do WhatsApp
+    │   ├── asset.js                Caminho das imagens e srcset (considera a base do site)
     │   ├── dialogo.js              Abre o <dialog> nativo como janela modal
     │   └── navegacao.js            Rolagem para o topo ou para uma seção
-    └── styles/                     CSS do Vanilla (base, pkz, one-to-one, cta, extras, portal, legal) + global.css
+    └── styles/                     CSS do Vanilla (base, pkz, one-to-one, cta, extras, portal, legal),
+                                    mais home.css, fisio.css e global.css
 ```
-
+ 
+## Descrição dos entregáveis
+ 
+**HTML / JSX**
+Um único `index.html` na raiz; cada página é um componente React (`src/pages/`) com HTML semântico e acessível (`<header>`, `<main>`, `<footer>`, `<dialog>`, atalho "Pular para o conteúdo", `aria-label` nos controles).
+ 
+**CSS**
+Estilização com identidade visual consistente, seguindo a abordagem mobile first, com layout responsivo, bom espaçamento entre elementos, menu hambúrguer no mobile e menu completo no desktop. As folhas de estilo do Vanilla foram mantidas, com `home.css` e `fisio.css` para as páginas novas (`src/styles/`).
+ 
+**JavaScript / React**
+Funcionalidades e interações do site (menu hambúrguer controlado por estado, botões de contato pelo WhatsApp, janelas modais, mapa que carrega no clique, animações de rolagem e transição entre páginas), implementadas com React, React Router, GSAP e Lenis.
+ 
+**Documentação Scrum ([`scrum/`](scrum/README.md))**
+Registro de como a equipe aplicou o Scrum nesta tarefa: [Product Backlog](scrum/product-backlog.md) priorizado e um arquivo por sprint ([Sprint 1](scrum/sprint-01.md), [Sprint 2](scrum/sprint-02.md) e [Sprint 3](scrum/sprint-03.md)) com Sprint Backlog, cronograma e tarefas.
+ 
+**Sem agendamento**
+Esta versão **não tem o sistema de agendamento** (páginas de aula experimental, agenda, formulário com CPF e envio pelo WhatsApp). O contato é feito só pelos botões que abrem o WhatsApp com a mensagem pronta. O agendamento está na versão com agendamento: [repositório](https://github.com/enzotrotto-ibmec/PFE-2026-2-Grupo-1-react) e [site](https://pfe-2026-2-grupo-1-react-sigma.vercel.app/).
+ 
 ## Como executar
-
+ 
 Precisa do [Node.js](https://nodejs.org/) 20.19 ou mais novo.
-
+ 
 ```bash
 npm install      # instala as dependências (só na primeira vez)
 npm run dev      # abre o servidor de desenvolvimento (o terminal mostra o endereço)
+```
+ 
+### Comandos extras
+ 
+```bash
 npm run build    # gera a versão de produção na pasta dist/
 npm run preview  # testa a versão de produção localmente
+npm test         # roda os testes (Node, sem dependências extras)
 ```
-
-## Publicação no GitHub Pages
-
-1. Em `vite.config.js`, `NOME_DO_REPO` precisa ser o nome do repositório (hoje: `PFE-2026-2-Grupo-1-React`).
-2. No GitHub: **Settings → Pages → Source: GitHub Actions**.
-3. A cada push na `main`, o workflow `.github/workflows/deploy.yml` gera o build e publica.
-
-O build copia o `index.html` para `404.html`. Assim, quem abre direto um endereço como `/pkz`
-recebe o app, e o React Router mostra a página certa (o GitHub Pages não conhece as rotas do React).
-
+ 
 ## Observações técnicas
-
-* **CSS das duas marcas:** as marcas usam os mesmos nomes de classe e de variável com valores diferentes.
+ 
+* **CSS das marcas:** as marcas usam os mesmos nomes de classe e de variável com valores diferentes.
   Num app React todo CSS importado do jeito comum vale para o site inteiro, então cada página importa
   o seu CSS com `?inline` e o componente `EstilosDaPagina` o aplica só enquanto a página está na tela.
   Por isso os arquivos de `src/styles/` são praticamente os mesmos do Vanilla.
@@ -136,22 +168,51 @@ recebe o app, e o React Router mostra a página certa (o GitHub Pages não conhe
   chama `showModal()`, que dá o fundo escuro, o foco preso e o fechamento com Esc.
 * **Links para seções** (Sobre, Localização): `LinkInterno` com a prop `secao` troca de rota, se for
   preciso, e rola até a seção.
+* **Troca de página:** `TransicaoPagina` mostra uma cortina na cor da marca de destino (com o logo) a cada
+  mudança de rota, e o clique no `LinkInterno` leva a tela ao topo.
 * **WhatsApp:** o número `5521000000000` é de exemplo. Troque em `src/data/marcas.js` (uma vez por marca).
 * **Política de privacidade:** é um modelo; revisar com o responsável legal antes de publicar.
 
-### Próximos passos (quando virmos `useEffect`)
+### Sobre o `useEffect`
+ 
+Os efeitos de rolagem e de animação (seções que aparecem ao rolar, faixas, menu escalonado, cortina de
+troca de página, fundo WebGL) ficam isolados em `utils/animacoes.js`, `utils/rolagem.js`,
+`components/efeitos/FundoShader.jsx` e `components/TransicaoPagina.jsx`, para o resto do código seguir
+sem `useEffect`. O botão "voltar ao topo" aparece com a rolagem via CSS (`animation-timeline`, em
+`global.css`); nos navegadores sem suporte fica sempre visível.
+ 
+## Rolagem suave e componentes animados
+ 
+* **Lenis 1.3.27** (MIT, darkroom.engineering): rolagem suave do site inteiro, ligada ao relógio do GSAP em `src/utils/rolagem.js` (sem isso o ScrollTrigger sai de sincronia). Se a Lenis falhar ao iniciar, o site rola do jeito nativo. As janelas (`<dialog>`) param a Lenis enquanto estão abertas e têm `data-lenis-prevent`.
+* **React Bits** (reactbits.dev, de David Haz; licença MIT + Commons Clause: pode usar no site, não pode revender os componentes): usamos só as ideias, em versões enxutas escritas por nós, sem instalar o pacote:
+  * faixa de logos em loop na home e faixa de esportes da PKZ que acelera com a rolagem (`components/efeitos/FaixaRolante.jsx`, `useFaixaPorVelocidade` em `utils/animacoes.js`; ideias do LogoLoop e do ScrollVelocity);
+  * borda que brilha seguindo o mouse nos cartões da home (BorderGlow) e botões de ação com luz correndo pela borda (StarBorder): só CSS;
+  * menu do celular em tela cheia, com camadas e links entrando em sequência (`useMenuEscalonado`; ideia do StaggeredMenu).
+* GSAP continua em 3.15.1. As animações não respeitam `prefers-reduced-motion`, por decisão do grupo.
 
-No Vanilla, alguns comportamentos dependiam de "ouvir" a janela (scroll, IntersectionObserver).
-Isso, no React, pede `useEffect`, que ainda não foi dado. Por enquanto:
-
-* **Voltar ao topo:** aparece com a rolagem via CSS (`animation-timeline`, em `global.css`); nos
-  navegadores sem suporte fica sempre visível. Com `useEffect`, dá para voltar ao listener de scroll.
-* **Destaque da seção atual no menu** e **seções que aparecem ao rolar:** ainda não foram portados.
-* **Rolar para o topo ao trocar de página:** hoje é feito no clique do `LinkInterno`; com `useEffect`
-  pode virar um componente `ScrollToTop`.
+## Imagens
+ 
+As fotos em `public/assets/img/` existem em quatro larguras (480, 800, 1280 e 1920 px; `srcsetDe` em `src/utils/asset.js` monta o `srcset`). As de `img/portal/` só servem de imagem de compartilhamento (og:image) e existem só em 1280 px.
+ 
+## SEO e segurança
+ 
+No `npm run build` o `vite.config.js` gera um `index.html` por rota (`dist/pkz/`, `dist/fisioterapia/`...) com título, descrição, Open Graph e dados estruturados da página (fonte única: `src/data/seo.js`), mais `robots.txt`, `404.html` (noindex) e a política de conteúdo (CSP) em `<meta>`.
+ 
+Para gerar também `sitemap.xml`, canonical e `og:image` (precisam do endereço público), defina o endereço antes do build. No Vercel, crie a variável de ambiente `VITE_SITE_URL` com o endereço do site; localmente:
+ 
+```bash
+VITE_SITE_URL=https://seu-projeto.vercel.app npm run build
+```
+ 
+Sem a variável o build funciona, só omite essas quatro peças.
+ 
+### Segurança: o que está feito
+- Sem segredos no código, sem `innerHTML`/`dangerouslySetInnerHTML`, `npm audit` sem vulnerabilidades, links externos com `rel="noopener noreferrer"`.
+- **CSP e `Referrer-Policy` por `<meta>`** (só no build), que funcionam em qualquer hospedagem. O Vercel força HTTPS; cabeçalhos HTTP como `X-Content-Type-Options` e `Strict-Transport-Security` podem ser configurados no `vercel.json`.
+- **Terceiros que carregam:** Google Fonts (CSS e arquivos de fonte) e, só ao clicar em "Ver mapa", o mapa do Google. O CSS do Google Fonts não aceita SRI. Para eliminar esse terceiro, o caminho é hospedar as fontes no próprio site (pacotes `@fontsource`).
 
 ## Nossa equipe
-
+ 
 * Alexia Schmid
 * Bernardo Gomes
 * Bernardo Nemirovsky
@@ -161,48 +222,22 @@ Isso, no React, pede `useEffect`, que ainda não foi dado. Por enquanto:
 * João Pedro Ferreira
 
 ## Disciplina
-
+ 
 - **Curso/Disciplina:** Projeto Front-end (turma de terça-feira)
 - **Professor:** Thiago Marcondes Santos
 - **Instituição:** IBMEC
 - **Semestre:** 2026.2
 
-## Testes
-
-```bash
-npm test
-```
-
-Roda `src/data/seo.test.js` (Node, sem dependências): confere o `<head>` gerado por rota (canonical, `noindex` da 404, JSON-LD, tamanho das descrições).
-
-## Rolagem suave e componentes animados
-
-* **Lenis 1.3.27** (MIT, darkroom.engineering): rolagem suave do site inteiro, ligada ao relógio do GSAP em `src/utils/rolagem.js` (sem isso o ScrollTrigger sai de sincronia). Se a Lenis falhar ao iniciar, o site rola do jeito nativo. As janelas (`<dialog>`) param a Lenis enquanto estão abertas e têm `data-lenis-prevent`.
-* **React Bits** (reactbits.dev, de David Haz; licença MIT + Commons Clause: pode usar no site, não pode revender os componentes): usamos só as ideias, em versões enxutas escritas por nós, sem instalar o pacote:
-  * faixa de logos em loop na home e faixa de esportes da PKZ que acelera com a rolagem (`components/efeitos/FaixaRolante.jsx`, `useFaixaPorVelocidade` em `utils/animacoes.js`; ideias do LogoLoop e do ScrollVelocity);
-  * borda que brilha seguindo o mouse nos cartões da home (BorderGlow) e botão "Agendar aula" com luz correndo pela borda (StarBorder): só CSS;
-  * menu do celular em tela cheia, com camadas e links entrando em sequência (`useMenuEscalonado`; ideia do StaggeredMenu).
-* GSAP continua em 3.15.1. As animações não respeitam `prefers-reduced-motion`, por decisão do grupo.
-
-## Imagens
-
-As fotos em `public/assets/img/` existem em quatro larguras (480, 800, 1280 e 1920 px; `srcsetDe` em `src/utils/asset.js` monta o `srcset`). As de `img/portal/` só servem de imagem de compartilhamento (og:image) e existem só em 1280 px.
-
-## SEO, segurança e publicação
-
-No `npm run build` o `vite.config.js` gera um `index.html` por rota (`dist/pkz/`, `dist/one-to-one/`...) com título, descrição, Open Graph e dados estruturados da página (fonte única: `src/data/seo.js`), mais `robots.txt`, `404.html` (noindex) e a política de conteúdo (CSP) em `<meta>`.
-
-Para gerar também `sitemap.xml`, canonical e `og:image` (precisam do endereço público), defina o endereço antes do build:
-
-```bash
-VITE_SITE_URL=https://usuario.github.io npm run build
-```
-
-Sem a variável o build funciona, só omite essas quatro peças.
-
-### Segurança: o que está feito e o que a hospedagem não permite
-- Sem segredos no código, sem `innerHTML`/`dangerouslySetInnerHTML`, `npm audit` sem vulnerabilidades, links externos com `rel="noopener noreferrer"`.
-- **Agendamento:** a mensagem do WhatsApp (que vai na URL do `wa.me` e fica no histórico do navegador) mostra o CPF mascarado (`***.***.***-12`). O formulário continua validando o CPF completo. O telefone segue na mensagem.
-- **CSP e `Referrer-Policy` por `<meta>`** (só no build). O GitHub Pages não deixa configurar cabeçalhos HTTP, então `X-Content-Type-Options`, `Strict-Transport-Security` e `frame-ancestors` não dá para aplicar aqui; HTTPS o próprio GitHub Pages já força.
-- **Terceiros que carregam:** Google Fonts (CSS e arquivos de fonte) e, só ao clicar em "Ver mapa", o mapa do Google. O CSS do Google Fonts não aceita SRI. Para eliminar esse terceiro, o caminho é hospedar as fontes no próprio site (pacotes `@fontsource`).
-
+## Status dos entregáveis
+ 
+- [x] Estrutura HTML/JSX das páginas (um `index.html` e uma página por componente)
+- [x] Estilização CSS (mobile first)
+- [x] Responsividade (mobile, tablet e desktop)
+- [x] Menu hambúrguer (mobile) e menu completo (desktop)
+- [x] Imagens e remoção de placeholders vazios
+- [x] Versão sem agendamento
+- [x] Interatividade com React
+- [x] Documentação Scrum
+- [x] Publicação no Vercel
+- [x] Revisão e testes finais
+ 
