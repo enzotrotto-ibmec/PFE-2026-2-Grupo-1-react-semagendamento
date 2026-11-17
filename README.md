@@ -9,6 +9,7 @@ Repositório do site da PKZ Lab & Studio One To One refeito em **React**, a part
  
 * Repositório da versão Vanilla: https://github.com/enzotrotto-ibmec/PFE-2026-2-Grupo-1-vanila
 * Site da versão Vanilla (GitHub Pages): https://enzotrotto-ibmec.github.io/PFE-2026-2-Grupo-1-vanila/
+* Repositório da versão com agendamento: https://github.com/enzotrotto-ibmec/PFE-2026-2-Grupo-1-react
 
 O design, os textos e as imagens partem do Vanilla, mobile first e
 com menu hambúrguer. O que muda é a forma de construir: o site virou uma SPA (*single page application*).
@@ -20,6 +21,7 @@ Fisioterapia, animações presas à rolagem e transição entre páginas.
 O site é publicado via Vercel.
  
 * Link do site publicado: https://pfe-2026-2-grupo-1-react-semagendamento.vercel.app/
+* Link do site publicado com agendamento: https://pfe-2026-2-grupo-1-react-sigma.vercel.app/
 
 ## Tecnologias
  
