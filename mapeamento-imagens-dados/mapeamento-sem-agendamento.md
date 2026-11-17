@@ -2,9 +2,8 @@
 
 Documento do projeto **PKZ Lab & Studio One To One** (Projeto Front-end, IBMEC, 2026.2). Mostra **todas as imagens do site, exceto as logos, que são oficiais da empresa**, e onde cada uma aparece: a **página**, a **seção** e o **arquivo do código** (com a linha). Mostra também os **dados fictícios** do site (como o número de WhatsApp) e onde eles estão. O endereço e o Instagram das marcas são **reais**.
 
-* Repositório: https://github.com/enzotrotto-ibmec/PFE-2026-2-Grupo-1-react-semfisio
+* Repositório: https://github.com/enzotrotto-ibmec/PFE-2026-2-Grupo-1-react-semagendamento
 * Site publicado: https://pfe-2026-2-grupo-1-react-semagendamento.vercel.app/
-* Linhas conferidas no commit `7063c8f`. Se o código for editado, os números de linha podem mudar.
 
 ## Resumo
 
