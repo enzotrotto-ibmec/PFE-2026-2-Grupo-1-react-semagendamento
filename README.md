@@ -236,7 +236,7 @@ Sem a variável o build funciona, só omite essas quatro peças.
 - [x] Menu hambúrguer (mobile) e menu completo (desktop)
 - [x] Imagens e remoção de placeholders vazios
 - [x] Versão sem agendamento
-- [x] Interatividade com React
+- [x] Interatividade com React (estado, rotas, animações)
 - [x] Documentação Scrum
 - [x] Publicação no Vercel
 - [x] Revisão e testes finais
